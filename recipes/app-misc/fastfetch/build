@@ -2,13 +2,13 @@
 set -e
 
 echo "Extracting FastFetch..."
-tar -xf "fastfetch-2.56.0.tar.gz"
+tar -xf "2.56.0.tar.gz"
 cd "fastfetch-2.56.0" || exit 1
 
-echo "Changing Dir to build..."
+echo "Creating build directory..."
 mkdir -p build
 cd build
 
-echo "Cmake..."
-cmake .. -DCMAKE_BUILD_TYPE=Release
+echo "Running CMake..."
+cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
 cmake --build .
