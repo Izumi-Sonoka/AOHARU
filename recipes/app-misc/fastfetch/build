@@ -2,8 +2,8 @@
 set -e
 
 echo "Extracting FastFetch..."
-tar -xf "2.56.0.tar.gz"
-cd "2.56.0" || exit 1
+tar -xf "fastfetch-2.56.0.tar.gz"
+cd "fastfetch-2.56.0" || exit 1
 
 echo "Changing Dir to build..."
 mkdir -p build
