@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/sh
 
 echo "Downloading $PKG Repo..."
 git clone https://github.com/neovim/neovim
