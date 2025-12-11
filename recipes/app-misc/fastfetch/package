@@ -11,4 +11,5 @@ cmake .. -DCMAKE_BUILD_TYPE=Release
 cmake --build .
 
 mkdir -p "$PKGDIR/usr/bin"
-cp build/fastfetch "$PKGDIR/usr/bin/"
+cp fastfetch "$PKGDIR/usr/bin/"
+cp flashfetch "$PKGDIR/usr/bin/"
