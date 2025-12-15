@@ -1,0 +1,25 @@
+#!/bin/sh
+
+cat <<MSG
+=============================================================================
+ccache has been installed!
+
+To enable ccache system-wide, add to /etc/astral/make.conf:
+
+    CCACHE_ENABLED="yes"
+
+Or enable manually by setting:
+
+    export PATH="/usr/lib/ccache/bin:\$PATH"
+
+Cache location: ~/.ccache (user) or /var/cache/ccache (system)
+Config file: /etc/ccache/ccache.conf
+
+To check ccache stats:
+    ccache -s
+
+To clear cache:
+    ccache -C
+
+=============================================================================
+MSG
