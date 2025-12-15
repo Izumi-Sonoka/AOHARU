@@ -21,7 +21,7 @@ done
 mkdir -p "$PKGDIR/etc/ccache"
 cat > "$PKGDIR/etc/ccache/ccache.conf" <<CONF
 # ccache configuration for Astaraxia
-max_size = 6.0G
+max_size = 5.0G
 compression = true
 compression_level = 6
 CONF
