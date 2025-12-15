@@ -1,0 +1,8 @@
+ccache - Compiler cache for fast recompilation
+
+ccache is a compiler cache. It speeds up recompilation by caching previous
+compilations and detecting when the same compilation is being done again.
+
+Supported languages: C, C++, Objective-C, Objective-C++, CUDA, Hip, Assembly
+
+Homepage: https://ccache.dev/
