@@ -3,3 +3,4 @@ fastfetch    2.56.0     app-misc
 nano         8.6        app-editors
 neovim       0.11.5     app-editors
 ccache       4.9.1      dev-util
+e2fsprogs    1.47.3     sys-fs
