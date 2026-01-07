@@ -18,7 +18,7 @@ $PKG.Depend.RDepends: {
 };
 
 $PKG.Sources: {
-    urls = "https://github.com/Dr-Noob/cpufetch#branch=master"
+    urls = "git+https://github.com/Dr-Noob/cpufetch#branch=master"
 };
 
 $PKG.Checksums: {
