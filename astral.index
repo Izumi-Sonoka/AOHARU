@@ -1,5 +1,6 @@
 neofetch     7.1.0      app-misc
 fastfetch    2.56.0     app-misc
+cpufetch     vb1f20cf   app-misc
 nano         8.6        app-editors
 neovim       0.11.5     app-editors
 ccache       4.9.1      dev-util
