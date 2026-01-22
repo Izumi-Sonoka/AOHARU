@@ -1,7 +1,7 @@
 $PKG.Version = "3"
 
 $PKG.Metadata: {
-    Version = "b1f20cf"
+    Version = "git"
     Description = "cpufetch is a command-line tool written in C that displays the CPU information in a clean and beautiful way"
     Homepage = "https://github.com/Dr-Noob/cpufetch"
     Category = "app-misc"
