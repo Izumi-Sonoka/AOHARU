@@ -1,17 +1,21 @@
 # Astral Repository Index v2.0
 # Format: category/package | arch | version
 
-app-misc:
+app-misc: {
   neofetch | any | 7.1.0
   fastfetch | any | 2.56.0
   cpufetch-git | any | git
+}
 
-app-editors:
+app-editors: {
   nano | x86_64 | 8.6
   neovim | x86_64 | git
+}
 
-dev-util:
+dev-util: {
   ccache | any | 4.9.1
 
-sys-fs:
+}
+sys-fs: {
   e2fsprogs | any | 1.47.3
+}
