@@ -16,6 +16,11 @@ dev-util: {
   ccache | any | 4.9.1
 
 }
+
 sys-fs: {
   e2fsprogs | any | 1.47.3
+}
+
+sys-process: {
+  htop | any | 3.4.1
 }
