@@ -1,0 +1,40 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "4.2"
+    Description = "DOS filesystem utilities"
+    Homepage = "https://github.com/dosfstools/dosfstools"
+    Category = "sys-fs"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/dosfstools/dosfstools/releases/download/v4.2/dosfstools-4.2.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:64926eb5d778e878e7e6ea0f4b16b57ea00e17d4b2f97f00c81c97f4df3ae281 dosfstools-4.2.tar.gz
+};
+
+$PKG.Build: {
+    cd dosfstools-4.2
+    ./configure              \
+        --prefix=/usr        \
+        --enable-compat-symlinks \
+        --mandir=/usr/share/man \
+        --docdir=/usr/share/doc/dosfstools-4.2
+    make -j$(nproc)
+};
+
+$PKG.Package: {
+    cd dosfstools-4.2
+    make DESTDIR="$PKGDIR" install
+};

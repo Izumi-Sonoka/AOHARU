@@ -1,0 +1,50 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "3.31.6"
+    Description = "Cross-platform build system generator"
+    Homepage = "https://cmake.org/"
+    Category = "sys-devel"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+    openssl
+    curl
+    zlib
+    libarchive
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+    openssl
+    curl
+    zlib
+    libarchive
+};
+
+$PKG.Sources: {
+    urls = "https://cmake.org/files/v3.31/cmake-3.31.6.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:53ac0e5c4b2e03accd9ea1e27e25c9a9ece6ade8b1b0f4eec40e8285bde61b22 cmake-3.31.6.tar.gz
+};
+
+$PKG.Build: {
+    cd cmake-3.31.6
+    ./bootstrap          \
+        --prefix=/usr    \
+        --system-libs    \
+        --mandir=/share/man \
+        --no-system-jsoncpp \
+        --no-system-librhash \
+        --docdir=/share/doc/cmake-3.31.6
+    make -j$(nproc)
+};
+
+$PKG.Package: {
+    cd cmake-3.31.6
+    make DESTDIR="$PKGDIR" install
+};

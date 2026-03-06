@@ -1,0 +1,51 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "4.0.1"
+    Description = "A smart and user-friendly command line shell"
+    Homepage = "https://fishshell.com/"
+    Category = "app-shells"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    cmake
+    ninja
+    ncurses
+    pcre2
+    python3
+    gettext
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+    ncurses
+    pcre2
+    python3
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/fish-shell/fish-shell/releases/download/4.0.1/fish-4.0.1.tar.xz"
+};
+
+$PKG.Checksums: {
+    sha256:e5db1a5be8a9f5aff9a8d3fc1aef64264a6d0f0c0b71b65a8da44e3b5e3f8e20 fish-4.0.1.tar.xz
+};
+
+$PKG.Build: {
+    cd fish-4.0.1
+    cmake -B build                      \
+        -DCMAKE_INSTALL_PREFIX=/usr     \
+        -DCMAKE_BUILD_TYPE=Release      \
+        -DBUILD_SHARED_LIBS=ON
+    cmake --build build -j$(nproc)
+};
+
+$PKG.Package: {
+    cd fish-4.0.1
+    DESTDIR="$PKGDIR" cmake --install build
+};
+
+$PKG.PostInstall: {
+    grep -q /usr/bin/fish /etc/shells || echo /usr/bin/fish >> /etc/shells
+};

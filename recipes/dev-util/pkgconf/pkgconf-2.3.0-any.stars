@@ -1,0 +1,42 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "2.3.0"
+    Description = "Package compiler and linker metadata toolkit"
+    Homepage = "https://gitea.treehouse.systems/ariadne/pkgconf"
+    Category = "dev-util"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+    meson
+    ninja
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+};
+
+$PKG.Sources: {
+    urls = "https://distfiles.ariadne.space/pkgconf/pkgconf-2.3.0.tar.xz"
+};
+
+$PKG.Checksums: {
+    sha256:2a1f2f9d2d9a70e0bdf6c875e9a2a37e856f9c3a7c1f3e2c0d3ee2c4aafe5d2a pkgconf-2.3.0.tar.xz
+};
+
+$PKG.Build: {
+    cd pkgconf-2.3.0
+    ./configure            \
+        --prefix=/usr      \
+        --disable-static   \
+        --docdir=/usr/share/doc/pkgconf-2.3.0
+    make -j$(nproc)
+};
+
+$PKG.Package: {
+    cd pkgconf-2.3.0
+    make DESTDIR="$PKGDIR" install
+    ln -sfv pkgconf "$PKGDIR"/usr/bin/pkg-config
+};

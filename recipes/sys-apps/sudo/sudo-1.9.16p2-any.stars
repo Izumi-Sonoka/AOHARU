@@ -1,0 +1,46 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "1.9.16p2"
+    Description = "Execute commands as another user"
+    Homepage = "https://www.sudo.ws/"
+    Category = "sys-apps"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+    pam
+    openssl
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+    pam
+    openssl
+};
+
+$PKG.Sources: {
+    urls = "https://www.sudo.ws/dist/sudo-1.9.16p2.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:5f21380b5a4f4e887c89d06cc92c9c5d7c523b6b8c8b0527dcdf96b4e6bac6d5 sudo-1.9.16p2.tar.gz
+};
+
+$PKG.Build: {
+    cd sudo-1.9.16p2
+    ./configure                          \
+        --prefix=/usr                    \
+        --libexecdir=/usr/lib            \
+        --with-secure-path               \
+        --with-all-insults               \
+        --with-env-editor                \
+        --with-passprompt="[sudo] password for %p: "
+    make -j$(nproc)
+};
+
+$PKG.Package: {
+    cd sudo-1.9.16p2
+    make DESTDIR="$PKGDIR" install
+};

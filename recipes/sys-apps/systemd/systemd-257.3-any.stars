@@ -1,0 +1,80 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "257.3"
+    Description = "System and service manager"
+    Homepage = "https://systemd.io/"
+    Category = "sys-apps"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    meson
+    ninja
+    pkg-config
+    python3
+    gperf
+    libcap
+    pam
+    openssl
+    zlib
+    zstd
+    xz-utils
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+    libcap
+    pam
+    openssl
+    zlib
+    zstd
+    xz-utils
+    kmod
+};
+
+$PKG.Depend.Optional: {
+    libidn2
+    libseccomp
+    cryptsetup
+    pcre2
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/systemd/systemd/archive/v257.3/systemd-257.3.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:7c1f2f1b8c25e92ad7b1e0bc2b29bb6f18afcabcfa0e4c2f0bb0d6b1d4f9bc3e systemd-257.3.tar.gz
+};
+
+$PKG.Build: {
+    cd systemd-257.3
+    meson setup build          \
+        --prefix=/usr          \
+        --buildtype=release    \
+        -D default-dnssec=no   \
+        -D firstboot=false     \
+        -D install-tests=false \
+        -D ldconfig=false      \
+        -D sysusers=false      \
+        -D rpmmacrosdir=no     \
+        -D homed=disabled      \
+        -D userdb=false        \
+        -D man=disabled        \
+        -D mode=release        \
+        -D pamconfdir=/etc/pam.d \
+        -D nobody-group=nogroup \
+        -D sysupdate=disabled  \
+        -D ukify=disabled
+    ninja -C build -j$(nproc)
+};
+
+$PKG.Package: {
+    cd systemd-257.3
+    DESTDIR="$PKGDIR" ninja -C build install
+};
+
+$PKG.PostInstall: {
+    systemd-machine-id-setup 2>/dev/null || true
+};

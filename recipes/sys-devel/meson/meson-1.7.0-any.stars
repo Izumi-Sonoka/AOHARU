@@ -1,0 +1,36 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "1.7.0"
+    Description = "Fast and user friendly build system"
+    Homepage = "https://mesonbuild.com/"
+    Category = "sys-devel"
+};
+
+$PKG.Depend.BDepends: {
+    python3
+    ninja
+};
+
+$PKG.Depend.RDepends: {
+    python3
+    ninja
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/mesonbuild/meson/releases/download/1.7.0/meson-1.7.0.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:8a04b594bad9c17a3b85e0398a9e5deb9ec8d9c3a8e5b6e7db0b7de3a4bc87ab meson-1.7.0.tar.gz
+};
+
+$PKG.Build: {
+    cd meson-1.7.0
+    python3 setup.py build
+};
+
+$PKG.Package: {
+    cd meson-1.7.0
+    python3 setup.py install --prefix=/usr --root="$PKGDIR"
+};

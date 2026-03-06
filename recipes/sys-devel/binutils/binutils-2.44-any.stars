@@ -1,0 +1,51 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "2.44"
+    Description = "Tools necessary to build programs"
+    Homepage = "https://www.gnu.org/software/binutils/"
+    Category = "sys-devel"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+    bison
+    flex
+    texinfo
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+    zlib
+};
+
+$PKG.Sources: {
+    urls = "https://ftp.gnu.org/gnu/binutils/binutils-2.44.tar.xz"
+};
+
+$PKG.Checksums: {
+    sha256:c6cc65d9a0afb0769f2863e7a99fbc21a71d8257e25cb2f7feab0fd4428b4a96 binutils-2.44.tar.xz
+};
+
+$PKG.Build: {
+    cd binutils-2.44
+    mkdir -v build
+    cd build
+    ../configure         \
+        --prefix=/usr    \
+        --enable-gold    \
+        --enable-ld=default \
+        --enable-plugins \
+        --enable-shared  \
+        --disable-werror \
+        --enable-64-bit-bfd \
+        --with-system-zlib
+    make -j$(nproc) tooldir=/usr
+};
+
+$PKG.Package: {
+    cd binutils-2.44/build
+    make tooldir=/usr DESTDIR="$PKGDIR" install
+    rm -fv "$PKGDIR"/usr/lib/lib{bfd,ctf,ctf-nobfd,gprofng,opcodes,sframe}.a
+};

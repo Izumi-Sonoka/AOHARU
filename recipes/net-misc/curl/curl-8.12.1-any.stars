@@ -1,0 +1,52 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "8.12.1"
+    Description = "Command line tool and library for transferring data with URLs"
+    Homepage = "https://curl.se/"
+    Category = "net-misc"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+    openssl
+    zlib
+    pkg-config
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+    openssl
+    zlib
+};
+
+$PKG.Depend.Optional: {
+    nghttp2
+    libssh2
+    libidn2
+};
+
+$PKG.Sources: {
+    urls = "https://curl.se/download/curl-8.12.1.tar.xz"
+};
+
+$PKG.Checksums: {
+    sha256:27a8b24ead7a5b290b30a1e07b3bcf5ebb1bfb7e04f0e66a33c1ff9b7a9e9f0b curl-8.12.1.tar.xz
+};
+
+$PKG.Build: {
+    cd curl-8.12.1
+    ./configure              \
+        --prefix=/usr        \
+        --disable-static     \
+        --with-openssl       \
+        --enable-threaded-resolver \
+        --with-ca-bundle=/etc/ssl/certs/ca-certificates.crt
+    make -j$(nproc)
+};
+
+$PKG.Package: {
+    cd curl-8.12.1
+    make DESTDIR="$PKGDIR" install
+};
