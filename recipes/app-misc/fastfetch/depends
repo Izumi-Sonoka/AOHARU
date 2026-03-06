@@ -1,5 +1,0 @@
-gcc
-cmake
-make
-pkg-config
-ldd

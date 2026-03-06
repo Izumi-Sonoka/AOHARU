@@ -1,7 +1,0 @@
-#!/bin/sh
-
-echo "Changing Dir to $PKG.."
-cd neovim
-
-echo "Making $PKG..."
-make CMAKE_BUILD_TYPE=Release
