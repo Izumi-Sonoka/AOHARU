@@ -94,3 +94,8 @@ sys-libs: {
 sys-process: {
   htop | any | 3.4.1
 }
+
+# sys-process (1 package)
+x11-wm: {
+  pointblank | any | git
+}
