@@ -23,7 +23,7 @@ $PKG.Sources: {
 };
 
 $PKG.Checksums: {
-    sha256:5244a9b9f6c52fd49498abba8e0f030df2a7c8c4a6e66e5bac36f12c06e1ef54 nano-8.6.tar.xz
+    sha256:f7abfbf0eed5f573ab51bd77a458f32d82f9859c55e9689f819d96fe1437a619 nano-8.6.tar.xz
 };
 
 $PKG.Build: {
