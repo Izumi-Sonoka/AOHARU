@@ -1,0 +1,35 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "1.10.0"
+    Description = "Extremely fast compression algorithm and library"
+    Homepage = "https://lz4.org/"
+    Category = "app-arch"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/lz4/lz4/releases/download/v1.10.0/lz4-1.10.0.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:537512904744b35e232912055ccf8ec66d768639ff3abe18b84d9eadc7a866f6 lz4-1.10.0.tar.gz
+};
+
+$PKG.Build: {
+    cd lz4-1.10.0
+    make -j$(nproc) PREFIX=/usr
+};
+
+$PKG.Package: {
+    cd lz4-1.10.0
+    make DESTDIR="$PKGDIR" PREFIX=/usr install
+};

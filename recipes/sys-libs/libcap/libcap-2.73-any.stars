@@ -1,0 +1,38 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "2.73"
+    Description = "POSIX 1003.1e capability library and tools"
+    Homepage = "https://sites.google.com/site/fullycapable/"
+    Category = "sys-libs"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+    perl
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+    pam
+};
+
+$PKG.Sources: {
+    urls = "https://mirrors.edge.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-2.73.tar.xz"
+};
+
+$PKG.Checksums: {
+    sha256:f7c5dfd7f7d10f53d30de6e0513f30a48f1878a95aa80f02e48e8ef13ebef15e libcap-2.73.tar.xz
+};
+
+$PKG.Build: {
+    cd libcap-2.73
+    sed -i '/install -m.*STA/d' libcap/Makefile
+    make -j$(nproc) prefix=/usr lib=lib
+};
+
+$PKG.Package: {
+    cd libcap-2.73
+    make prefix=/usr lib=lib DESTDIR="$PKGDIR" RAISE_SETFCAP=no install
+};

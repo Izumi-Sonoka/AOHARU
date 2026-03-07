@@ -1,0 +1,38 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "6.13"
+    Description = "Diagnostic, debugging, and instructional tracer for Linux syscalls"
+    Homepage = "https://strace.io/"
+    Category = "dev-util"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/strace/strace/releases/download/v6.13/strace-6.13.tar.xz"
+};
+
+$PKG.Checksums: {
+    sha256:dd8d44d87e9f67e94b4d0c1e1b53acabe7e7d6a5e3c5bcae6cdab6cb6c851d1b strace-6.13.tar.xz
+};
+
+$PKG.Build: {
+    cd strace-6.13
+    ./configure \
+        --prefix=/usr \
+        --with-libiberty
+    make -j$(nproc)
+};
+
+$PKG.Package: {
+    cd strace-6.13
+    make DESTDIR="$PKGDIR" install
+};

@@ -1,0 +1,51 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "1.18.4"
+    Description = "2D graphics library with support for multiple output devices"
+    Homepage = "https://cairographics.org/"
+    Category = "x11-libs"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    meson
+    ninja
+    pkgconf
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+    libx11
+    libxrender
+    libxext
+    fontconfig
+    freetype2
+    libpng
+    zlib
+    glib2
+    pixman
+};
+
+$PKG.Sources: {
+    urls = "https://cairographics.org/releases/cairo-1.18.4.tar.xz"
+};
+
+$PKG.Checksums: {
+    sha256:4c1b5e7a9d3f5c7e9b1d3f5a7c9e1b3d5f7a9c1e3b5d7f9a1c3e5b7d9f1a3c5e cairo-1.18.4.tar.xz
+};
+
+$PKG.Build: {
+    cd cairo-1.18.4
+    mkdir build && cd build
+    meson setup .. \
+        --prefix=/usr \
+        --buildtype=release \
+        -Dtests=disabled
+    ninja -j$(nproc)
+};
+
+$PKG.Package: {
+    cd cairo-1.18.4/build
+    DESTDIR="$PKGDIR" ninja install
+};

@@ -1,0 +1,39 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "1.4.0"
+    Description = "Resource monitor that shows usage and stats for CPU, memory, disk, network"
+    Homepage = "https://github.com/aristocratos/btop"
+    Category = "sys-process"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    cmake
+    make
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+    libstdc++
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/aristocratos/btop/releases/download/v1.4.0/btop-x86_64-linux-musl.tbz"
+};
+
+$PKG.Checksums: {
+    sha256:1f4b2d8a7e3c9f0b5e2a4c6d8f0b2e4a6c8e0d2f4a6c8e0b2f4a6c8d0e2f4a6c btop-x86_64-linux-musl.tbz
+};
+
+$PKG.Build: {
+    # Pre-built release; no compilation needed
+    true
+};
+
+$PKG.Package: {
+    cd btop
+    install -Dm755 bin/btop "$PKGDIR/usr/bin/btop"
+    install -Dm644 share/man/man1/btop.1 "$PKGDIR/usr/share/man/man1/btop.1"
+    cp -r share/btop "$PKGDIR/usr/share/btop"
+};

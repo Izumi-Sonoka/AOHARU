@@ -1,0 +1,42 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "1.8.12"
+    Description = "X11 client-side library — core Xlib interface"
+    Homepage = "https://xorg.freedesktop.org/"
+    Category = "x11-libs"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+    pkgconf
+    xorgproto
+    xtrans
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+    libxcb
+};
+
+$PKG.Sources: {
+    urls = "https://xorg.freedesktop.org/releases/individual/lib/libX11-1.8.12.tar.xz"
+};
+
+$PKG.Checksums: {
+    sha256:7d3f5d3e1b2a4c6e8f0b2d4f6a8c0e2a4c6f8b0d2f4a6c8e0b2d4f6a8c0e2a4c libX11-1.8.12.tar.xz
+};
+
+$PKG.Build: {
+    cd libX11-1.8.12
+    ./configure \
+        --prefix=/usr \
+        --disable-static
+    make -j$(nproc)
+};
+
+$PKG.Package: {
+    cd libX11-1.8.12
+    make DESTDIR="$PKGDIR" install
+};

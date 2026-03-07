@@ -1,0 +1,50 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "2.40.4"
+    Description = "Miscellaneous system utilities — lsblk, mount, fdisk, findmnt, etc."
+    Homepage = "https://github.com/util-linux/util-linux"
+    Category = "sys-apps"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+    meson
+    ninja
+    pkgconf
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+    ncurses
+    readline
+    zlib
+    libcap-ng
+    pam
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/util-linux/util-linux/archive/v2.40.4/util-linux-2.40.4.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:d7f826a6a65be5d5c7b4c9e0f3a2e1b4d6c8e0f2a4c6d8e0b2f4a6c8e0d2f4a6 util-linux-2.40.4.tar.gz
+};
+
+$PKG.Build: {
+    cd util-linux-2.40.4
+    mkdir build && cd build
+    meson setup .. \
+        --prefix=/usr \
+        --buildtype=release \
+        -Dreadline=enabled \
+        -Dsystemd=disabled \
+        -Dtinfo=enabled
+    ninja -j$(nproc)
+};
+
+$PKG.Package: {
+    cd util-linux-2.40.4/build
+    DESTDIR="$PKGDIR" ninja install
+};

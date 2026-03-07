@@ -1,0 +1,39 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "5.6.3"
+    Description = "XZ Utils: LZMA compression utilities and library"
+    Homepage = "https://tukaani.org/xz/"
+    Category = "app-arch"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/tukaani-project/xz/releases/download/v5.6.3/xz-5.6.3.tar.xz"
+};
+
+$PKG.Checksums: {
+    sha256:b1d45295d3a0f84efe68fd4f38de3da9f08e3b277a67f256d52d1fec8ce84c84 xz-5.6.3.tar.xz
+};
+
+$PKG.Build: {
+    cd xz-5.6.3
+    ./configure \
+        --prefix=/usr \
+        --disable-static \
+        --docdir=/usr/share/doc/xz-5.6.3
+    make -j$(nproc)
+};
+
+$PKG.Package: {
+    cd xz-5.6.3
+    make DESTDIR="$PKGDIR" install
+};

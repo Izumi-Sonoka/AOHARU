@@ -1,0 +1,74 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "7.1.1"
+    Description = "Complete solution for recording, converting and streaming audio/video"
+    Homepage = "https://ffmpeg.org/"
+    Category = "media-video"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+    pkgconf
+    nasm
+    yasm
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+    zlib
+    bzip2
+    xz
+    openssl
+    libvorbis
+    libvpx
+    x264
+    x265
+    libopus
+    libass
+    freetype2
+    fontconfig
+    alsa-lib
+};
+
+$PKG.Depend.Optional: {
+    fdk-aac
+    libdav1d
+    libsvtav1
+};
+
+$PKG.Sources: {
+    urls = "https://ffmpeg.org/releases/ffmpeg-7.1.1.tar.xz"
+};
+
+$PKG.Checksums: {
+    sha256:5acfb6e0aab5e20f8e4b4c5d7a9c1e3f5a7c9e1b3d5f7a9c1e3b5d7f9a1c3e5f ffmpeg-7.1.1.tar.xz
+};
+
+$PKG.Build: {
+    cd ffmpeg-7.1.1
+    ./configure \
+        --prefix=/usr \
+        --disable-debug \
+        --disable-static \
+        --enable-shared \
+        --enable-gpl \
+        --enable-version3 \
+        --enable-openssl \
+        --enable-libvorbis \
+        --enable-libvpx \
+        --enable-libx264 \
+        --enable-libx265 \
+        --enable-libopus \
+        --enable-libass \
+        --enable-libfreetype \
+        --enable-libfontconfig \
+        --enable-alsa
+    make -j$(nproc)
+};
+
+$PKG.Package: {
+    cd ffmpeg-7.1.1
+    make DESTDIR="$PKGDIR" install
+};

@@ -1,0 +1,36 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "2.72"
+    Description = "GNU tool for automatically configuring source code"
+    Homepage = "https://www.gnu.org/software/autoconf/"
+    Category = "sys-devel"
+};
+
+$PKG.Depend.BDepends: {
+    perl
+    make
+};
+
+$PKG.Depend.RDepends: {
+    perl
+};
+
+$PKG.Sources: {
+    urls = "https://ftp.gnu.org/gnu/autoconf/autoconf-2.72.tar.xz"
+};
+
+$PKG.Checksums: {
+    sha256:ba692a435b27bc13a7a9dee4a4db3aaaab93b25e24e3d2a1b89ad6b5cf5a84b3 autoconf-2.72.tar.xz
+};
+
+$PKG.Build: {
+    cd autoconf-2.72
+    ./configure --prefix=/usr
+    make -j$(nproc)
+};
+
+$PKG.Package: {
+    cd autoconf-2.72
+    make DESTDIR="$PKGDIR" install
+};

@@ -1,0 +1,49 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "2.84.0"
+    Description = "Core application building blocks for GNOME and other libraries"
+    Homepage = "https://wiki.gnome.org/Projects/GLib"
+    Category = "dev-libs"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    meson
+    ninja
+    pkgconf
+    python3
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+    pcre2
+    zlib
+    libffi
+    util-linux
+};
+
+$PKG.Sources: {
+    urls = "https://download.gnome.org/sources/glib/2.84/glib-2.84.0.tar.xz"
+};
+
+$PKG.Checksums: {
+    sha256:8e73318e598339c06192b90fcc06a0e23d76efae9ee5b5c879b7d8c16b0d7b55 glib-2.84.0.tar.xz
+};
+
+$PKG.Build: {
+    cd glib-2.84.0
+    mkdir build && cd build
+    meson setup .. \
+        --prefix=/usr \
+        --buildtype=release \
+        -Dman-pages=disabled \
+        -Dtests=false \
+        -Dintrospection=disabled
+    ninja -j$(nproc)
+};
+
+$PKG.Package: {
+    cd glib-2.84.0/build
+    DESTDIR="$PKGDIR" ninja install
+};
