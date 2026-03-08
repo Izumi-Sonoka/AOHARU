@@ -1,0 +1,52 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "5.9"
+    Description = "A very advanced and programmable command interpreter"
+    Homepage = "https://www.zsh.org/"
+    Category = "app-shells"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+    ncurses
+    pcre2
+    gdbm
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+    ncurses
+    pcre2
+    gdbm
+};
+
+$PKG.Sources: {
+    urls = "https://www.zsh.org/pub/zsh-5.9.tar.xz"
+};
+
+$PKG.Checksums: {
+    sha256:9b8d1ecedd5b5e81fbf1918e876752a7dd948e05c1a0dba10ab863842d45acd5 zsh-5.9.tar.xz
+};
+
+$PKG.Build: {
+    cd zsh-5.9
+    ./configure            \
+        --prefix=/usr      \
+        --sysconfdir=/etc/zsh \
+        --enable-etcdir=/etc/zsh \
+        --enable-pcre      \
+        --enable-cap       \
+        --enable-multibyte
+    make -j$(nproc)
+};
+
+$PKG.Package: {
+    cd zsh-5.9
+    make DESTDIR="$PKGDIR" install
+};
+
+$PKG.PostInstall: {
+    grep -q /usr/bin/zsh /etc/shells || echo /usr/bin/zsh >> /etc/shells
+};

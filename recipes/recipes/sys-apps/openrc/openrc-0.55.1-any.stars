@@ -1,0 +1,45 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "0.55.1"
+    Description = "Dependency-based init system"
+    Homepage = "https://github.com/OpenRC/openrc"
+    Category = "sys-apps"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    meson
+    ninja
+    pkg-config
+    pam
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+    pam
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/OpenRC/openrc/archive/0.55.1/openrc-0.55.1.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:102e53825031361e4d96a5c0a7eb192bd64b0a6b227bb0568651efc8f5972952 openrc-0.55.1.tar.gz
+};
+
+$PKG.Build: {
+    cd openrc-0.55.1
+    meson setup build    \
+        --prefix=/usr    \
+        --buildtype=release \
+        -D audit=disabled \
+        -D pam=true      \
+        -D newnet=false
+    ninja -C build -j$(nproc)
+};
+
+$PKG.Package: {
+    cd openrc-0.55.1
+    DESTDIR="$PKGDIR" ninja -C build install
+};

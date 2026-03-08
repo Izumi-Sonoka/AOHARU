@@ -1,0 +1,65 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "3.13.2"
+    Description = "High-level general-purpose programming language"
+    Homepage = "https://www.python.org/"
+    Category = "dev-lang"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+    openssl
+    zlib
+    libffi
+    expat
+    ncurses
+    readline
+    bzip2
+    xz-utils
+    pkg-config
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+    openssl
+    zlib
+    libffi
+    expat
+    ncurses
+    readline
+    bzip2
+    xz-utils
+};
+
+$PKG.Depend.Optional: {
+    sqlite
+    tk
+    gdbm
+};
+
+$PKG.Sources: {
+    urls = "https://www.python.org/ftp/python/3.13.2/Python-3.13.2.tar.xz"
+};
+
+$PKG.Checksums: {
+    sha256:d984bcc57cd67caab26f7def42e523b1c015bbc5dc07836cf4f0b63fa159eb56 Python-3.13.2.tar.xz
+};
+
+$PKG.Build: {
+    cd Python-3.13.2
+    ./configure                  \
+        --prefix=/usr            \
+        --enable-shared          \
+        --with-system-expat      \
+        --enable-optimizations
+    make -j$(nproc)
+};
+
+$PKG.Package: {
+    cd Python-3.13.2
+    make DESTDIR="$PKGDIR" install
+    ln -sfv python3 "$PKGDIR"/usr/bin/python
+    ln -sfv python3-config "$PKGDIR"/usr/bin/python-config
+};

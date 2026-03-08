@@ -1,0 +1,42 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "3.5a"
+    Description = "Terminal multiplexer — manage multiple terminal sessions"
+    Homepage = "https://github.com/tmux/tmux"
+    Category = "app-misc"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+    pkgconf
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+    ncurses
+    libevent
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/tmux/tmux/releases/download/3.5a/tmux-3.5a.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:16216bd0877170dfcc64157085ba9013610b12b082548c7c9542cc0103198951 tmux-3.5a.tar.gz
+};
+
+$PKG.Build: {
+    cd tmux-3.5a
+    ./configure \
+        --prefix=/usr \
+        --sysconfdir=/etc
+    make -j$(nproc)
+};
+
+$PKG.Package: {
+    cd tmux-3.5a
+    make DESTDIR="$PKGDIR" install
+    install -Dm644 example_tmux.conf "$PKGDIR/usr/share/doc/tmux/example_tmux.conf"
+};

@@ -1,0 +1,36 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "3.24.0"
+    Description = "Instrumentation framework for dynamic analysis — memcheck, callgrind, and more"
+    Homepage = "https://valgrind.org/"
+    Category = "dev-util"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+};
+
+$PKG.Sources: {
+    urls = "https://sourceware.org/pub/valgrind/valgrind-3.24.0.tar.bz2"
+};
+
+$PKG.Checksums: {
+    sha256:71aee202bdef1ae73898ccf7e9c315134fa7db6c246063afc503aef702ec03bd valgrind-3.24.0.tar.bz2
+};
+
+$PKG.Build: {
+    cd valgrind-3.24.0
+    ./configure --prefix=/usr
+    make -j$(nproc)
+};
+
+$PKG.Package: {
+    cd valgrind-3.24.0
+    make DESTDIR="$PKGDIR" install
+};

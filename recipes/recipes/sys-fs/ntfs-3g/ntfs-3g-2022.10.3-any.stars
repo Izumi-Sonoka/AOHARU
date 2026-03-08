@@ -1,0 +1,46 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "2022.10.3"
+    Description = "NTFS filesystem driver and utilities"
+    Homepage = "https://www.tuxera.com/community/open-source-ntfs-3g/"
+    Category = "sys-fs"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+    pkg-config
+    fuse3
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+    fuse3
+};
+
+$PKG.Sources: {
+    urls = "https://tuxera.com/opensource/ntfs-3g_ntfsprogs-2022.10.3.tgz"
+};
+
+$PKG.Checksums: {
+    sha256:f20e36ee68074b845e3ef2f5f5e512f3e89b8a74e3a7ef9e60086e17e1e1fc2b ntfs-3g_ntfsprogs-2022.10.3.tgz
+};
+
+$PKG.Build: {
+    cd ntfs-3g_ntfsprogs-2022.10.3
+    ./configure            \
+        --prefix=/usr      \
+        --disable-static   \
+        --with-fuse=internal \
+        --docdir=/usr/share/doc/ntfs-3g-2022.10.3
+    make -j$(nproc)
+};
+
+$PKG.Package: {
+    cd ntfs-3g_ntfsprogs-2022.10.3
+    make DESTDIR="$PKGDIR" install
+    chmod 755 "$PKGDIR"/usr/bin/ntfs-3g
+    ln -sfv ../bin/ntfs-3g "$PKGDIR"/usr/sbin/mount.ntfs
+    ln -sfv ../bin/ntfs-3g "$PKGDIR"/usr/sbin/mount.ntfs-3g
+};

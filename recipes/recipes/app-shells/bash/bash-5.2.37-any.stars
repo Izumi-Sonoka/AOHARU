@@ -1,0 +1,49 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "5.2.37"
+    Description = "The GNU Bourne Again shell"
+    Homepage = "https://www.gnu.org/software/bash/"
+    Category = "app-shells"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+    ncurses
+    readline
+};
+
+$PKG.Sources: {
+    urls = "https://ftp.gnu.org/gnu/bash/bash-5.2.37.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:9599b22ecd1d5787ad7d3b7bf0c59f312b3396d1e281175dd1f8a4014da621ff bash-5.2.37.tar.gz
+};
+
+$PKG.Build: {
+    cd bash-5.2.37
+    ./configure \
+        --prefix=/usr \
+        --without-bash-malloc \
+        --with-installed-readline \
+        --docdir=/usr/share/doc/bash-5.2.37
+    make -j$(nproc)
+};
+
+$PKG.Package: {
+    cd bash-5.2.37
+    make DESTDIR="$PKGDIR" install
+    ln -sfv bash "$PKGDIR/usr/bin/sh"
+};
+
+$PKG.PostInstall: {
+    if ! grep -q /usr/bin/bash /etc/shells 2>/dev/null; then
+        echo /usr/bin/bash >> /etc/shells
+    fi
+};

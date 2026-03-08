@@ -1,0 +1,53 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "2.4.7"
+    Description = "GNU Privacy Guard — OpenPGP encryption and signing tool"
+    Homepage = "https://gnupg.org/"
+    Category = "sec-tools"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+    pkgconf
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+    libgpg-error
+    libgcrypt
+    libassuan
+    libksba
+    npth
+    readline
+    zlib
+    bzip2
+    openssl
+};
+
+$PKG.Sources: {
+    urls = "https://gnupg.org/ftp/gcrypt/gnupg/gnupg-2.4.7.tar.bz2"
+};
+
+$PKG.Checksums: {
+    sha256:7b24706e4da7e0e3b06ca068231027401f238102c41c909631349dcc3b85eb46 gnupg-2.4.7.tar.bz2
+};
+
+$PKG.Build: {
+    cd gnupg-2.4.7
+    ./configure \
+        --prefix=/usr \
+        --localstatedir=/var \
+        --sysconfdir=/etc \
+        --disable-fd-passing \
+        --enable-symcryptrun \
+        --docdir=/usr/share/doc/gnupg-2.4.7
+    make -j$(nproc)
+};
+
+$PKG.Package: {
+    cd gnupg-2.4.7
+    make DESTDIR="$PKGDIR" install
+    ln -sfv gpg "$PKGDIR/usr/bin/gpg2"
+};

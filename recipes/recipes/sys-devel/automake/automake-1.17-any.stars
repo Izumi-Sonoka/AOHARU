@@ -1,0 +1,38 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "1.17"
+    Description = "GNU tool for automatically creating Makefiles"
+    Homepage = "https://www.gnu.org/software/automake/"
+    Category = "sys-devel"
+};
+
+$PKG.Depend.BDepends: {
+    autoconf
+    perl
+    make
+};
+
+$PKG.Depend.RDepends: {
+    autoconf
+    perl
+};
+
+$PKG.Sources: {
+    urls = "https://ftp.gnu.org/gnu/automake/automake-1.17.tar.xz"
+};
+
+$PKG.Checksums: {
+    sha256:8920c1fc411e13b90bf704ef9db6f29d540e76d232cb3b2c9f4dc4cc599bd990 automake-1.17.tar.xz
+};
+
+$PKG.Build: {
+    cd automake-1.17
+    ./configure --prefix=/usr --docdir=/usr/share/doc/automake-1.17
+    make -j$(nproc)
+};
+
+$PKG.Package: {
+    cd automake-1.17
+    make DESTDIR="$PKGDIR" install
+};

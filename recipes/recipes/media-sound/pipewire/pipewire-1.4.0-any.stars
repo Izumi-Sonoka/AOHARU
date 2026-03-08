@@ -1,0 +1,65 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "1.4.0"
+    Description = "Multimedia framework for audio and video — successor to PulseAudio and JACK"
+    Homepage = "https://pipewire.org/"
+    Category = "media-sound"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    meson
+    ninja
+    pkgconf
+    python3
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+    alsa-lib
+    glib2
+    dbus
+    libcap
+    systemd-libs
+    openssl
+    libusb
+    libsndfile
+    ffmpeg
+};
+
+$PKG.Depend.Optional: {
+    bluez
+    jack2
+    v4l-utils
+};
+
+$PKG.Sources: {
+    urls = "https://gitlab.freedesktop.org/pipewire/pipewire/-/archive/1.4.0/pipewire-1.4.0.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:81076aac2020ec53ef6c3e2f6e8b5bee7275dad15c295bacab5c73e2727955ec pipewire-1.4.0.tar.gz
+};
+
+$PKG.Build: {
+    cd pipewire-1.4.0
+    mkdir build && cd build
+    meson setup .. \
+        --prefix=/usr \
+        --buildtype=release \
+        -Dsession-managers=[] \
+        -Ddocs=disabled \
+        -Dtests=disabled
+    ninja -j$(nproc)
+};
+
+$PKG.Package: {
+    cd pipewire-1.4.0/build
+    DESTDIR="$PKGDIR" ninja install
+};
+
+$PKG.PostInstall: {
+    echo "PipeWire installed. Activate with: systemctl --user enable --now pipewire pipewire-pulse"
+    echo "For WirePlumber session manager, install: astral -S wireplumber"
+};
