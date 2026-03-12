@@ -1,0 +1,47 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "7.95"
+    Description = "Network exploration tool and security/port scanner"
+    Homepage = "https://nmap.org/"
+    Category = "net-misc"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+    python3
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+    openssl
+    libpcap
+    lua
+    pcre2
+    zlib
+};
+
+$PKG.Sources: {
+    urls = "https://nmap.org/dist/nmap-7.95.tar.bz2"
+};
+
+$PKG.Checksums: {
+    sha256:e14ab530e47b5afd88f1c8a2bac7f89cd8fe6b478e22d255c5b9bddb7a1c5778 nmap-7.95.tar.bz2
+};
+
+$PKG.Build: {
+    cd nmap-7.95
+    ./configure \
+        --prefix=/usr \
+        --without-ndiff \
+        --without-zenmap \
+        --with-openssl \
+        --with-libpcap
+    make -j$(nproc)
+};
+
+$PKG.Package: {
+    cd nmap-7.95
+    make DESTDIR="$PKGDIR" install
+};

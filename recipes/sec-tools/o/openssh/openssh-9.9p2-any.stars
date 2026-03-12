@@ -1,0 +1,56 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "9.9p2"
+    Description = "OpenSSH — free SSH protocol implementation for secure remote login"
+    Homepage = "https://www.openssh.com/"
+    Category = "sec-tools"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+    pkgconf
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+    openssl
+    zlib
+    pam
+    libselinux
+};
+
+$PKG.Sources: {
+    urls = "https://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-9.9p2.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:91aadb603e08cc285eddf965e1199d02585fa94d994d6cae5b41e1721e215673 openssh-9.9p2.tar.gz
+};
+
+$PKG.Build: {
+    cd openssh-9.9p2
+    ./configure \
+        --prefix=/usr \
+        --sysconfdir=/etc/ssh \
+        --with-privsep-path=/var/lib/sshd \
+        --with-default-path=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
+        --with-pam \
+        --with-ssl-dir=/usr \
+        --with-pid-dir=/run
+    make -j$(nproc)
+};
+
+$PKG.Package: {
+    cd openssh-9.9p2
+    make DESTDIR="$PKGDIR" install
+    install -Dm755 contrib/ssh-copy-id "$PKGDIR/usr/bin/ssh-copy-id"
+    install -Dm644 contrib/ssh-copy-id.1 "$PKGDIR/usr/share/man/man1/ssh-copy-id.1"
+};
+
+$PKG.PostInstall: {
+    install -d -m700 /var/lib/sshd
+    echo "To start sshd: sshd"
+    echo "Config file: /etc/ssh/sshd_config"
+};

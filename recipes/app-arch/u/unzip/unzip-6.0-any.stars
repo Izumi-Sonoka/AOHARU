@@ -1,0 +1,40 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "6.0"
+    Description = "Extraction utility for zip archives"
+    Homepage = "https://infozip.sourceforge.net/UnZip.html"
+    Category = "app-arch"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+    bzip2
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+    bzip2
+};
+
+$PKG.Sources: {
+    urls = "https://downloads.sourceforge.net/infozip/unzip60.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:036d96991646d0449ed0aa952e4fbe21b476ce994abc276e49d30e686708bd37 unzip60.tar.gz
+};
+
+$PKG.Build: {
+    cd unzip60
+    make -f unix/Makefile -j$(nproc) generic \
+        CFLAGS="$CFLAGS -DBIG_MEM -DMMAP" \
+        LF2=""
+};
+
+$PKG.Package: {
+    cd unzip60
+    make prefix="$PKGDIR"/usr MANDIR="$PKGDIR"/usr/share/man/man1 \
+        -f unix/Makefile install
+};

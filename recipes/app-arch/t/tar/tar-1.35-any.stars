@@ -1,0 +1,38 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "1.35"
+    Description = "GNU tape archiver for creating and extracting archives"
+    Homepage = "https://www.gnu.org/software/tar/"
+    Category = "app-arch"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+};
+
+$PKG.Sources: {
+    urls = "https://ftp.gnu.org/gnu/tar/tar-1.35.tar.xz"
+};
+
+$PKG.Checksums: {
+    sha256:4d62ff37342ec7aed748535323930c7cf94acf71c3591882b26a7ea50f3edc16 tar-1.35.tar.xz
+};
+
+$PKG.Build: {
+    cd tar-1.35
+    ./configure \
+        --prefix=/usr \
+        --bindir=/bin
+    make -j$(nproc)
+};
+
+$PKG.Package: {
+    cd tar-1.35
+    make DESTDIR="$PKGDIR" install
+};

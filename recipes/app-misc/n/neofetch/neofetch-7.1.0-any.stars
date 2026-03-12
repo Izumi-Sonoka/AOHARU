@@ -1,0 +1,38 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "7.1.0"
+    Description = "Fast, highly customizable system info script"
+    Homepage = "https://github.com/dylanaraps/neofetch"
+    Category = "app-misc"
+};
+
+$PKG.Depend.BDepends: {
+};
+
+$PKG.Depend.RDepends: {
+    bash
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/dylanaraps/neofetch/archive/7.1.0.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:58a95e6b714e41efc804eca389a223309169b2def35e57fa934482a6b47c27e7 7.1.0.tar.gz
+};
+
+$PKG.Build: {
+    cd neofetch-7.1.0
+};
+
+$PKG.Package: {
+    cd neofetch-7.1.0
+    mkdir -p "$PKGDIR"/usr/bin
+    mkdir -p "$PKGDIR"/usr/share/man/man1
+    mkdir -p "$PKGDIR"/usr/share/doc/neofetch
+    cp neofetch "$PKGDIR"/usr/bin/
+    chmod 755 "$PKGDIR"/usr/bin/neofetch
+    cp neofetch.1 "$PKGDIR"/usr/share/man/man1/
+    cp LICENSE.md "$PKGDIR"/usr/share/doc/neofetch/
+};

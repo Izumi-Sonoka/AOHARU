@@ -1,0 +1,48 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "3.4.1"
+    Description = "Fast, versatile, remote and local file-copying tool"
+    Homepage = "https://rsync.samba.org/"
+    Category = "net-tools"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+    pkgconf
+    python3
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+    openssl
+    zlib
+    xxhash
+    lz4
+    zstd
+};
+
+$PKG.Sources: {
+    urls = "https://download.samba.org/pub/rsync/src/rsync-3.4.1.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:2924bcb3a1ed8b551fc101f740b9f0fe0a202b115027647cf69850d65fd88c52 rsync-3.4.1.tar.gz
+};
+
+$PKG.Build: {
+    cd rsync-3.4.1
+    ./configure \
+        --prefix=/usr \
+        --without-included-zlib \
+        --enable-lz4 \
+        --enable-zstd \
+        --enable-xxhash
+    make -j$(nproc)
+};
+
+$PKG.Package: {
+    cd rsync-3.4.1
+    make DESTDIR="$PKGDIR" install
+};

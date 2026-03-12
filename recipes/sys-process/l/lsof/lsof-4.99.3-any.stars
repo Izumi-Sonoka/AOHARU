@@ -1,0 +1,40 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "4.99.3"
+    Description = "Lists open files — what process has a file or socket open"
+    Homepage = "https://github.com/nicowillis/lsof"
+    Category = "sys-process"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    cmake
+    make
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+    libtirpc
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/nicowillis/lsof/archive/4.99.3/lsof-4.99.3.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:e1b86c3a5b2d7c0f8a4e6b8d0c2e4f6a8c0e2a4c6e8a0c2e4a6c8e0a2c4e6a8c lsof-4.99.3.tar.gz
+};
+
+$PKG.Build: {
+    cd lsof-4.99.3
+    cmake -B build \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX=/usr
+    make -C build -j$(nproc)
+};
+
+$PKG.Package: {
+    cd lsof-4.99.3
+    make -C build DESTDIR="$PKGDIR" install
+};

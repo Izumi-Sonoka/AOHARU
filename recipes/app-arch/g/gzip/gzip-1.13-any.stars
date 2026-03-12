@@ -1,0 +1,36 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "1.13"
+    Description = "GNU compression utility"
+    Homepage = "https://www.gnu.org/software/gzip/"
+    Category = "app-arch"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+};
+
+$PKG.Sources: {
+    urls = "https://ftp.gnu.org/gnu/gzip/gzip-1.13.tar.xz"
+};
+
+$PKG.Checksums: {
+    sha256:7454eb6935db17c6655576c2e1b0fabefd38b4d0936e0f87f48cd062ce91a057 gzip-1.13.tar.xz
+};
+
+$PKG.Build: {
+    cd gzip-1.13
+    ./configure --prefix=/usr
+    make -j$(nproc)
+};
+
+$PKG.Package: {
+    cd gzip-1.13
+    make DESTDIR="$PKGDIR" install
+};

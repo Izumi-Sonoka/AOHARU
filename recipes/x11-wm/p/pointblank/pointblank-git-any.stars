@@ -1,0 +1,59 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "git"
+    Description = "X11 infinite layout window manager with DSL configuration"
+    Homepage = "https://github.com/Astaraxia-Linux/Pointblank"
+    Category = "x11-wm"
+};
+
+$PKG.Depend.BDepends: {
+    gcc >= 10
+    cmake >= 3.20
+    make
+};
+
+$PKG.Depend.RDepends: {
+    libx11
+    libxrender
+    libxft
+    libxrandr
+    cairo
+    glib2
+    libxcb
+};
+
+$PKG.Depend.Optional: {
+    picom
+    dunst
+    polybar
+};
+
+$PKG.Sources: {
+    urls = "git+https://github.com/Astaraxia-Linux/Pointblank#branch=main"
+};
+
+$PKG.Checksums: {
+    # Git sources don't use checksums
+};
+
+$PKG.Build: {
+    cd Pointblank
+    mkdir -p build && cd build
+    cmake .. \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_BUILD_TYPE=Release
+    make -j$(nproc)
+};
+
+$PKG.Package: {
+    cd Pointblank/build
+    make DESTDIR="$PKGDIR" install
+    install -Dm644 ../contrib/pointblank.desktop "$PKGDIR/usr/share/xsessions/pointblank.desktop"
+};
+
+$PKG.PostInstall: {
+    echo "Point:Blank installed."
+    echo "Add 'exec pointblank' to ~/.xinitrc, or select it from your display manager."
+    echo "Config: ~/.config/pblank/pointblank.wmi"
+};
