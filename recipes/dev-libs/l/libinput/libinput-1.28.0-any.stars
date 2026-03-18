@@ -1,0 +1,45 @@
+# SPDX-License-Identifier: GPL-3.0-only
+# Assisted-by: Tasklet:Claude-Sonnet-4-5 [shell]
+# NOTE: Replace PLACEHOLDER checksums by running:
+#   astral-recipegen checksum <url> sha256
+
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version     = "1.28.0"
+    Description = "Library for handling input devices"
+    Homepage    = "https://gitlab.freedesktop.org/libinput/libinput"
+    Category    = "dev-libs"
+};
+
+$PKG.Depend.BDepends: {
+    meson
+    ninja
+    pkg-config
+};
+
+$PKG.Depend.RDepends: {
+    libudev
+    mtdev
+    libevdev
+    libwacom
+};
+
+$PKG.Sources: {
+    urls = "https://gitlab.freedesktop.org/libinput/libinput/-/archive/1.28.0/libinput-1.28.0.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:67a47f335d1324589d11e4d351664fb9e3e333a5cfb220b2c66d484b4248e734 libinput-1.28.0.tar.gz
+};
+
+$PKG.Build: {
+    cd libinput-1.28.0
+    meson setup build --prefix=/usr -Ddocumentation=false -Dtests=false -Ddebug-gui=false
+    ninja -C build
+};
+
+$PKG.Package: {
+    cd libinput-1.28.0
+    DESTDIR="$PKGDIR" ninja -C build install
+};

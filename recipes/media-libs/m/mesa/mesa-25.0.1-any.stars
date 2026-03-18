@@ -1,0 +1,63 @@
+# SPDX-License-Identifier: GPL-3.0-only
+# Assisted-by: Tasklet:Claude-Sonnet-4-5 [shell]
+# NOTE: Replace PLACEHOLDER checksums by running:
+#   astral-recipegen checksum <url> sha256
+
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version     = "25.0.1"
+    Description = "Open-source OpenGL, Vulkan and other graphics implementations"
+    Homepage    = "https://mesa3d.org"
+    Category    = "media-libs"
+};
+
+$PKG.Depend.BDepends: {
+    meson
+    ninja
+    pkg-config
+    python3
+    python3-mako
+    bison
+    flex
+    libclc
+    glslang
+    cbindgen
+    rust
+};
+
+$PKG.Depend.RDepends: {
+    libdrm
+    wayland
+    wayland-protocols
+    libxcb
+    libxshmfence
+    llvm
+    zlib
+    zstd
+    libsensors
+};
+
+$PKG.Sources: {
+    urls = "https://mesa.freedesktop.org/archive/mesa-25.0.1.tar.xz"
+};
+
+$PKG.Checksums: {
+    sha256:49eb55ba5acccae91deb566573a6a73144a0f39014be1982d78c21c5b6b0bb3f mesa-25.0.1.tar.xz
+};
+
+$PKG.Build: {
+    cd mesa-25.0.1
+    meson setup build --prefix=/usr \
+        -Dgallium-drivers=radeonsi,nouveau,virgl,llvmpipe,softpipe \
+        -Dvulkan-drivers=amd,nouveau \
+        -Dplatforms=x11,wayland \
+        -Degl=enabled -Dgles1=enabled -Dgles2=enabled \
+        -Dgbm=enabled -Dopengl=true
+    ninja -C build
+};
+
+$PKG.Package: {
+    cd mesa-25.0.1
+    DESTDIR="$PKGDIR" ninja -C build install
+};

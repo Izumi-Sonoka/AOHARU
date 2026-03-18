@@ -1,0 +1,32 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version     = "2.3.5"
+    Description = "A fast math parser library"
+    Homepage    = "https://github.com/beltoforion/muparser"
+    Category    = "dev-libs"
+};
+
+$PKG.Depend.BDepends: {
+    cmake
+    ninja
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/beltoforion/muparser/archive/refs/tags/v2.3.5.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:20b43cc68c655665db83711906f01b20c51909368973116dfc8d7b3c4ddb5dd4 v2.3.5.tar.gz
+};
+
+$PKG.Build: {
+    cd muparser-2.3.5
+    cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_SAMPLES=OFF
+    cmake --build build
+};
+
+$PKG.Package: {
+    cd muparser-2.3.5
+    DESTDIR="$PKGDIR" cmake --install build
+};

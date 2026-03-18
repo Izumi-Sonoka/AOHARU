@@ -1,21 +1,15 @@
 $PKG.Version = "3"
 
 $PKG.Metadata: {
-    Version = "2.3.0"
+    Version     = "2.3.0"
     Description = "Package compiler and linker metadata toolkit"
-    Homepage = "https://gitea.treehouse.systems/ariadne/pkgconf"
-    Category = "dev-util"
+    Homepage    = "https://github.com/pkgconf/pkgconf"
+    Category    = "dev-util"
 };
 
 $PKG.Depend.BDepends: {
-    gcc
-    make
     meson
     ninja
-};
-
-$PKG.Depend.RDepends: {
-    glibc
 };
 
 $PKG.Sources: {
@@ -23,20 +17,17 @@ $PKG.Sources: {
 };
 
 $PKG.Checksums: {
-    sha256:3a9080ac51d03615e7c1910a0a2a8df08424892b5f13b0628a204d3fcce0ea8b pkgconf-2.3.0.tar.xz
+    sha256:0000000000000000000000000000000000000000000000000000000000000000 pkgconf-2.3.0.tar.gz
 };
 
 $PKG.Build: {
     cd pkgconf-2.3.0
-    ./configure            \
-        --prefix=/usr      \
-        --disable-static   \
-        --docdir=/usr/share/doc/pkgconf-2.3.0
-    make -j$(nproc)
+    meson setup build --prefix=/usr
+    ninja -C build
 };
 
 $PKG.Package: {
     cd pkgconf-2.3.0
-    make DESTDIR="$PKGDIR" install
-    ln -sfv pkgconf "$PKGDIR"/usr/bin/pkg-config
+    DESTDIR="$PKGDIR" ninja -C build install
+    ln -sf pkgconf "$PKGDIR/usr/bin/pkg-config"
 };

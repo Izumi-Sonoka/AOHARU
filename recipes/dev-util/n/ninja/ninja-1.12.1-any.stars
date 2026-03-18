@@ -1,0 +1,32 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version     = "1.12.1"
+    Description = "A small build system with a focus on speed"
+    Homepage    = "https://ninja-build.org"
+    Category    = "dev-util"
+};
+
+$PKG.Depend.BDepends: {
+    cmake
+    python3
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/ninja-build/ninja/archive/refs/tags/v1.12.1.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:821bdff48a3f683bc4bb3b6f0b5fe7b2d647cf65d52aeb63328c91a6c6df285a v1.12.1.tar.gz
+};
+
+$PKG.Build: {
+    cd ninja-1.12.1
+    cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
+    cmake --build build -j$(nproc)
+};
+
+$PKG.Package: {
+    cd ninja-1.12.1
+    DESTDIR="$PKGDIR" cmake --install build
+};

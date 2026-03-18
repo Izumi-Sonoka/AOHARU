@@ -25,7 +25,7 @@ $PKG.Depend.RDepends: {
 };
 
 $PKG.Sources: {
-    urls = "https://ftp.gnu.org/gnu/gdb/gdb-15.2.tar.xz"
+    urls = "https://ftpmirror.gnu.org/gnu/gdb/gdb-15.2.tar.xz"
 };
 
 $PKG.Checksums: {

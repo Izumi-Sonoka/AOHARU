@@ -1,0 +1,40 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version     = "1.23.1"
+    Description = "A computer display server protocol"
+    Homepage    = "https://wayland.freedesktop.org"
+    Category    = "dev-libs"
+};
+
+$PKG.Depend.BDepends: {
+    meson
+    ninja
+    pkg-config
+    libxml2
+    doxygen
+};
+
+$PKG.Depend.RDepends: {
+    expat
+    libffi
+};
+
+$PKG.Sources: {
+    urls = "https://gitlab.freedesktop.org/wayland/wayland/-/archive/1.23.1/wayland-1.23.1.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:dd59ca527dd9410a607a6dd8f0379c63d16d1ea5cb32857ba6b60d695ae82961 wayland-1.23.1.tar.gz
+};
+
+$PKG.Build: {
+    cd wayland-1.23.1
+    meson setup build --prefix=/usr -Ddocumentation=false
+    ninja -C build
+};
+
+$PKG.Package: {
+    cd wayland-1.23.1
+    DESTDIR="$PKGDIR" ninja -C build install
+};

@@ -19,7 +19,7 @@ $PKG.Depend.RDepends: {
 };
 
 $PKG.Sources: {
-    urls = "https://ftp.gnu.org/gnu/bash/bash-5.2.37.tar.gz"
+    urls = "https://ftpmirror.gnu.org/gnu/bash/bash-5.2.37.tar.gz"
 };
 
 $PKG.Checksums: {

@@ -1,0 +1,37 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version     = "2.4.124"
+    Description = "Userspace interface to kernel DRM services"
+    Homepage    = "https://dri.freedesktop.org"
+    Category    = "x11-libs"
+};
+
+$PKG.Depend.BDepends: {
+    meson
+    ninja
+    pkg-config
+};
+
+$PKG.Depend.RDepends: {
+    libpciaccess
+};
+
+$PKG.Sources: {
+    urls = "https://dri.freedesktop.org/libdrm/libdrm-2.4.124.tar.xz"
+};
+
+$PKG.Checksums: {
+    sha256:ac36293f61ca4aafaf4b16a2a7afff312aa4f5c37c9fbd797de9e3c0863ca379 libdrm-2.4.124.tar.xz
+};
+
+$PKG.Build: {
+    cd libdrm-2.4.124
+    meson setup build --prefix=/usr
+    ninja -C build
+};
+
+$PKG.Package: {
+    cd libdrm-2.4.124
+    DESTDIR="$PKGDIR" ninja -C build install
+};

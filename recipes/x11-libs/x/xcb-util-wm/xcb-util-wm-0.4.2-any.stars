@@ -1,0 +1,37 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version     = "0.4.2"
+    Description = "Utility libraries for XC Binding - client and window-manager helpers for ICCCM"
+    Homepage    = "https://xcb.freedesktop.org"
+    Category    = "x11-libs"
+};
+
+$PKG.Depend.BDepends: {
+    autoconf
+    automake
+    pkg-config
+};
+
+$PKG.Depend.RDepends: {
+    libxcb
+};
+
+$PKG.Sources: {
+    urls = "https://xcb.freedesktop.org/dist/xcb-util-wm-0.4.2.tar.xz"
+};
+
+$PKG.Checksums: {
+    sha256:62c34e21d06264687faea7edbf63632c9f04d55e72114aa4a57bb95e4f888a0b xcb-util-wm-0.4.2.tar.xz
+};
+
+$PKG.Build: {
+    cd xcb-util-wm-0.4.2
+    ./configure --prefix=/usr
+    make -j$(nproc)
+};
+
+$PKG.Package: {
+    cd xcb-util-wm-0.4.2
+    make DESTDIR="$PKGDIR" install
+};

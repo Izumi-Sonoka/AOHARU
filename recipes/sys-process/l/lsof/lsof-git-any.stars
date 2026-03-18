@@ -1,0 +1,40 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "git"
+    Description = "Lists open files — what process has a file or socket open"
+    Homepage = "https://github.com/nicowillis/lsof"
+    Category = "sys-process"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    cmake
+    make
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+    libtirpc
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/lsof-org/lsof"
+};
+
+$PKG.Checksums: {
+    # git.
+};
+
+$PKG.Build: {
+    cd lsof
+    cmake -B build \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX=/usr
+    make -C build -j$(nproc)
+};
+
+$PKG.Package: {
+    cd lsof
+    make -C build DESTDIR="$PKGDIR" install
+};

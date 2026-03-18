@@ -1,0 +1,34 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version     = "1.45"
+    Description = "Wayland protocol extensions"
+    Homepage    = "https://wayland.freedesktop.org"
+    Category    = "dev-libs"
+};
+
+$PKG.Depend.BDepends: {
+    meson
+    ninja
+    pkg-config
+    wayland
+};
+
+$PKG.Sources: {
+    urls = "https://gitlab.freedesktop.org/wayland/wayland-protocols/-/archive/1.45/wayland-protocols-1.45.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:eca75bd2285d437d8f702b189842d36ba2ff771af309ae6d02c50ef9a8e40630 wayland-protocols-1.45.tar.gz
+};
+
+$PKG.Build: {
+    cd wayland-protocols-1.45
+    meson setup build --prefix=/usr
+    ninja -C build
+};
+
+$PKG.Package: {
+    cd wayland-protocols-1.45
+    DESTDIR="$PKGDIR" ninja -C build install
+};

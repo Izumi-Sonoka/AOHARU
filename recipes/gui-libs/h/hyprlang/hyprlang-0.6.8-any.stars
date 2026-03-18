@@ -1,0 +1,38 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version     = "0.6.8"
+    Description = "The official implementation library for the hypr config language"
+    Homepage    = "https://github.com/hyprwm/hyprlang"
+    Category    = "gui-libs"
+};
+
+$PKG.Depend.BDepends: {
+    cmake
+    ninja
+    pkg-config
+};
+
+$PKG.Depend.RDepends: {
+    hyprutils >= 0.8.0
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/hyprwm/hyprlang/archive/refs/tags/v0.6.8.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:d10a0778b646e04d83e8b90cc0f764fb96958c01a15c3c0678d95a40fc647ed5 v0.6.8.tar.gz
+};
+
+$PKG.Build: {
+    cd hyprlang-0.6.8
+    cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
+    cmake --build build
+};
+
+$PKG.Package: {
+    cd hyprlang-0.6.8
+    DESTDIR="$PKGDIR" cmake --install build
+    install -Dm644 LICENSE "$PKGDIR/usr/share/licenses/hyprlang/LICENSE"
+};

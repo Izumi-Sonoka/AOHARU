@@ -1,0 +1,42 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version     = "1.17.0"
+    Description = "X C-language Bindings library"
+    Homepage    = "https://xcb.freedesktop.org"
+    Category    = "x11-libs"
+};
+
+$PKG.Depend.BDepends: {
+    autoconf
+    automake
+    pkg-config
+    xcb-proto
+    libXau
+    libXdmcp
+    python3
+};
+
+$PKG.Depend.RDepends: {
+    libXau
+    libXdmcp
+};
+
+$PKG.Sources: {
+    urls = "https://xorg.freedesktop.org/archive/individual/lib/libxcb-1.17.0.tar.xz"
+};
+
+$PKG.Checksums: {
+    sha256:599ebf9996710fea71622e6e184f3a8ad5b43d0e5fa8c4e407123c88a59a6d55 libxcb-1.17.0.tar.xz
+};
+
+$PKG.Build: {
+    cd libxcb-1.17.0
+    ./configure --prefix=/usr --enable-xinput
+    make -j$(nproc)
+};
+
+$PKG.Package: {
+    cd libxcb-1.17.0
+    make DESTDIR="$PKGDIR" install
+};

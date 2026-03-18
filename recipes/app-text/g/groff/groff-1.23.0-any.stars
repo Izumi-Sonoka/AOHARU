@@ -17,7 +17,7 @@ $PKG.Depend.RDepends: {
 };
 
 $PKG.Sources: {
-    urls = "https://ftp.gnu.org/gnu/groff/groff-1.23.0.tar.gz"
+    urls = "https://ftpmirror.gnu.org/gnu/groff/groff-1.23.0.tar.gz"
 };
 
 $PKG.Checksums: {

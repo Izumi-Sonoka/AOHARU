@@ -1,0 +1,43 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version     = "0.1.7"
+    Description = "Hyprland's idle daemon"
+    Homepage    = "https://github.com/hyprwm/hypridle"
+    Category    = "gui-apps"
+};
+
+$PKG.Depend.BDepends: {
+    cmake
+    ninja
+    pkg-config
+    hyprwayland-scanner
+};
+
+$PKG.Depend.RDepends: {
+    hyprutils
+    hyprlang
+    wayland
+    wayland-protocols
+    sdbus-c++
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/hyprwm/hypridle/archive/refs/tags/v0.1.7.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:c4ef2e2894fc2082cfdabe7db086b1f246e3f0de571f7f2c6b26d7c0d9a5f8f3 v0.1.7.tar.gz
+};
+
+$PKG.Build: {
+    cd hypridle-0.1.7
+    cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
+    cmake --build build
+};
+
+$PKG.Package: {
+    cd hypridle-0.1.7
+    DESTDIR="$PKGDIR" cmake --install build
+    install -Dm644 LICENSE "$PKGDIR/usr/share/licenses/hypridle/LICENSE"
+};

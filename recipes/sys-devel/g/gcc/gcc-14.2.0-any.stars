@@ -25,11 +25,11 @@ $PKG.Depend.RDepends: {
 };
 
 $PKG.Sources: {
-    urls = "https://ftp.gnu.org/gnu/gcc/gcc-14.2.0/gcc-14.2.0.tar.xz"
+    urls = "https://ftpmirror.gnu.org/gnu/gcc/gcc-14.2.0/gcc-14.2.0.tar.xz"
 };
 
 $PKG.Checksums: {
-    sha256:a7b39bc69cbf9e25826c5a60ab26477001f7c08d85cec04bc0e29cabed6f3cc9 gcc-14.2.0.tar.xz
+    sha256:bc203db1972c31ab9199c964d1748ba0b4e4b75af4fc077129ab4c11d2111392 gcc-14.2.0.tar.xz
 };
 
 $PKG.Build: {

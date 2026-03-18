@@ -20,11 +20,11 @@ $PKG.Depend.RDepends: {
 };
 
 $PKG.Sources: {
-    urls = "https://tuxera.com/opensource/ntfs-3g_ntfsprogs-2022.10.3.tgz"
+    urls = "https://github.com/tuxera/ntfs-3g/archive/2022.10.3/ntfs-3g-2022.10.3.tar.gz"
 };
 
 $PKG.Checksums: {
-    sha256:f20e36ee68074b845e3ef2f5f5e512f3e89b8a74e3a7ef9e60086e17e1e1fc2b ntfs-3g_ntfsprogs-2022.10.3.tgz
+    sha256:8bd7749ea9d8534c9f0664d48b576e90b96d45ec8803c9427f6ffaa2f0dde299 ntfs-3g-2022.10.3.tar.gz
 };
 
 $PKG.Build: {

@@ -1,0 +1,49 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version     = "0.9.2"
+    Description = "Hyprland's GPU-accelerated screen locking utility"
+    Homepage    = "https://github.com/hyprwm/hyprlock"
+    Category    = "gui-apps"
+};
+
+$PKG.Depend.BDepends: {
+    cmake
+    ninja
+    pkg-config
+    hyprwayland-scanner
+};
+
+$PKG.Depend.RDepends: {
+    hyprutils
+    hyprlang
+    hyprcursor
+    hyprgraphics
+    wayland
+    wayland-protocols
+    cairo
+    pango
+    mesa-egl
+    libxkbcommon
+    pam
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/hyprwm/hyprlock/archive/refs/tags/v0.9.2.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:d4a8ef9115232b3545dd517e96f1251f91022765eb272b5e7057c20e3e7e8837 v0.9.2.tar.gz
+};
+
+$PKG.Build: {
+    cd hyprlock-0.9.2
+    cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
+    cmake --build build
+};
+
+$PKG.Package: {
+    cd hyprlock-0.9.2
+    DESTDIR="$PKGDIR" cmake --install build
+    install -Dm644 LICENSE "$PKGDIR/usr/share/licenses/hyprlock/LICENSE"
+};

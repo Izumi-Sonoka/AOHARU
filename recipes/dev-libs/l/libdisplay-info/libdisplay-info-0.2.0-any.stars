@@ -1,0 +1,38 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version     = "0.2.0"
+    Description = "EDID and DisplayID library"
+    Homepage    = "https://gitlab.freedesktop.org/emersion/libdisplay-info"
+    Category    = "dev-libs"
+};
+
+$PKG.Depend.BDepends: {
+    meson
+    ninja
+    pkg-config
+    hwdata
+};
+
+$PKG.Depend.RDepends: {
+    hwdata
+};
+
+$PKG.Sources: {
+    urls = "https://gitlab.freedesktop.org/emersion/libdisplay-info/-/archive/0.2.0/libdisplay-info-0.2.0.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:56d8386abcba1b2886be711b67e9c7b6b345ae4bcde044982a6d2567ba2e4ea3 libdisplay-info-0.2.0.tar.gz
+};
+
+$PKG.Build: {
+    cd libdisplay-info-0.2.0
+    meson setup build --prefix=/usr
+    ninja -C build
+};
+
+$PKG.Package: {
+    cd libdisplay-info-0.2.0
+    DESTDIR="$PKGDIR" ninja -C build install
+};

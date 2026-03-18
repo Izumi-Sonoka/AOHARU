@@ -1,0 +1,40 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version     = "6.19.8"
+    Description = "The Linux kernel (latest stable)"
+    Homepage    = "https://kernel.org"
+    Category    = "sys-kernel"
+};
+
+$PKG.Depend.BDepends: {
+    bc
+    flex
+    bison
+    openssl
+    kmod
+    perl
+    python3
+    pahole
+};
+
+$PKG.Depend.RDepends: {
+    kmod
+};
+
+$PKG.Sources: {
+    urls = "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.19.8.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:aada4722db8bcfa0b9732851856d405082b6a4fa2e3ab067be8db17cdd115b38 linux-6.19.8.tar.gz
+};
+
+$PKG.Build: {
+    cp -r linux-6.19.8 /usr/src/linux-6.19.8
+};
+
+$PKG.Package: {
+    echo "Linux-6.19.8 in /usr/src"
+    echo "Have fun compiling the kernel!"
+};

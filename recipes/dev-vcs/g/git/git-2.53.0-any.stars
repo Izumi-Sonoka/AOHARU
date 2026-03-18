@@ -1,0 +1,50 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version     = "2.53.0"
+    Description = "The fast, distributed revision control system"
+    Homepage    = "https://git-scm.com"
+    Category    = "dev-vcs"
+};
+
+$PKG.Depend.BDepends: {
+    make
+    autoconf
+    gettext
+    perl
+    python3
+    asciidoc
+    xmlto
+};
+
+$PKG.Depend.RDepends: {
+    curl
+    openssl
+    libpcre2
+    zlib
+    expat
+};
+
+$PKG.Sources: {
+    urls = "https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.53.0.tar.xz"
+};
+
+$PKG.Checksums: {
+    sha256:5818bd7d80b061bbbdfec8a433d609dc8818a05991f731ffc4a561e2ca18c653 git-2.53.0.tar.xz
+};
+
+$PKG.Build: {
+    cd git-2.53.0
+    make configure
+    ./configure --prefix=/usr --with-gitconfig=/etc/gitconfig
+    make all
+};
+
+$PKG.Package: {
+    cd git-2.53.0
+    make DESTDIR="$PKGDIR" install
+    install -Dm644 COPYING "$PKGDIR/usr/share/licenses/git/COPYING"
+};
+$PKG.PostInstall: {
+    echo "git installed. Configure with: git config --global user.name \"Your Name\""
+};

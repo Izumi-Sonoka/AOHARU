@@ -1,0 +1,33 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version     = "0.44.2"
+    Description = "Pixel manipulation library"
+    Homepage    = "https://pixman.org"
+    Category    = "x11-libs"
+};
+
+$PKG.Depend.BDepends: {
+    meson
+    ninja
+    pkg-config
+};
+
+$PKG.Sources: {
+    urls = "https://cairographics.org/releases/pixman-0.44.2.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:6349061ce1a338ab6952b92194d1b0377472244208d47ff25bef86fc71973466 pixman-0.44.2.tar.gz
+};
+
+$PKG.Build: {
+    cd pixman-0.44.2
+    meson setup build --prefix=/usr
+    ninja -C build
+};
+
+$PKG.Package: {
+    cd pixman-0.44.2
+    DESTDIR="$PKGDIR" ninja -C build install
+};

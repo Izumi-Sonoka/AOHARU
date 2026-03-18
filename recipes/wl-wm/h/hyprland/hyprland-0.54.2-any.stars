@@ -1,0 +1,77 @@
+$PKG.Version = "3"
+
+$PKG.Metadata {
+    Version     = "0.54.2"
+    Description = "A modern, highly customizable dynamic tiling Wayland compositor"
+    Homepage    = "https://hypr.land"
+    Category    = "wl-wm"
+};
+
+$PKG.Sources {
+    urls = "https://github.com/hyprwm/Hyprland/archive/refs/tags/v0.54.2.tar.gz"
+};
+
+$PKG.Checksums {
+    sha256:4df597d4f4eaef547f53d0b335704140b4db6aa147e3e3d951df1b2b23b728e5 v0.54.2.tar.gz
+};
+
+
+$PKG.Depend.BDepends {
+    cmake >= 3.30
+    ninja
+    pkg-config
+    glslang
+    hyprwayland-scanner >= 0.3.10
+    wayland-protocols >= 1.45
+    python3
+};
+
+$PKG.Depend.RDepends {
+    wayland-server >= 1.22.91
+    libxkbcommon >= 1.11.0
+    libinput >= 1.28
+    libdrm
+    mesa-gbm
+    cairo
+    pango
+    pixman
+    xcursor
+    libuuid
+    gio
+    re2
+    muparser
+    lcms2
+    aquamarine >= 0.9.3
+    hyprlang >= 0.6.7
+    hyprcursor >= 0.1.7
+    hyprutils >= 0.11.0
+    hyprgraphics >= 0.1.6
+    hyprland-protocols >= 0.6.4
+    libxcb
+    xcb-render
+    xcb-xfixes
+    xcb-icccm
+    xcb-composite
+    xcb-res
+    xcb-errors
+};
+
+$PKG.Build {
+    cd Hyprland-0.54.2
+    cmake -B build -G Ninja \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DNO_SYSTEMD=ON
+    cmake --build build
+};
+
+$PKG.Package {
+    cd Hyprland-0.54.2
+    DESTDIR="$PKGDIR" cmake --install build
+    install -Dm644 LICENSE "$PKGDIR/usr/share/licenses/hyprland/LICENSE"
+};
+
+$PKG.PostInstall {
+    echo "Hyprland installed successfully."
+    echo "Start from a TTY with: exec Hyprland"
+};

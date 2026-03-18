@@ -1,0 +1,43 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version     = "0.1.13"
+    Description = "The hyprland cursor format, library and utilities"
+    Homepage    = "https://github.com/hyprwm/hyprcursor"
+    Category    = "gui-libs"
+};
+
+$PKG.Depend.BDepends: {
+    cmake
+    ninja
+    pkg-config
+};
+
+$PKG.Depend.RDepends: {
+    hyprutils >= 0.8.0
+    xcursor
+    cairo
+    librsvg
+    libzip
+    tomlplusplus
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/hyprwm/hyprcursor/archive/refs/tags/v0.1.13.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:82af8b2ce27242ffdd6baebaa71b3f6c8665dc25c52bfcfccc16912622896af8 v0.1.13.tar.gz
+};
+
+$PKG.Build: {
+    cd hyprcursor-0.1.13
+    cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
+    cmake --build build
+};
+
+$PKG.Package: {
+    cd hyprcursor-0.1.13
+    DESTDIR="$PKGDIR" cmake --install build
+    install -Dm644 LICENSE "$PKGDIR/usr/share/licenses/hyprcursor/LICENSE"
+};

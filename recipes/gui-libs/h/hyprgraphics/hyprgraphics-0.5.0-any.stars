@@ -1,0 +1,44 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version     = "0.5.0"
+    Description = "Hyprland graphics and resource utilities"
+    Homepage    = "https://github.com/hyprwm/hyprgraphics"
+    Category    = "gui-libs"
+};
+
+$PKG.Depend.BDepends: {
+    cmake
+    ninja
+    pkg-config
+};
+
+$PKG.Depend.RDepends: {
+    hyprutils >= 0.8.0
+    hyprlang
+    cairo
+    libwebp
+    libjpeg-turbo
+    librsvg
+    libspng
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/hyprwm/hyprgraphics/archive/refs/tags/v0.5.0.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:bb37f611c1f50e58dcc0aa97ec1b39c186b78160807f109c5dd8833d58f8bc04 v0.5.0.tar.gz
+};
+
+$PKG.Build: {
+    cd hyprgraphics-0.5.0
+    cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
+    cmake --build build
+};
+
+$PKG.Package: {
+    cd hyprgraphics-0.5.0
+    DESTDIR="$PKGDIR" cmake --install build
+    install -Dm644 LICENSE "$PKGDIR/usr/share/licenses/hyprgraphics/LICENSE"
+};

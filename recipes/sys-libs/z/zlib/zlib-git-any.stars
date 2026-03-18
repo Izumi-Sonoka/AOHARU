@@ -1,0 +1,37 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "git"
+    Description = "General-purpose lossless data-compression library"
+    Homepage = "https://zlib.net/"
+    Category = "sys-libs"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+};
+
+$PKG.Sources: {
+    urls = "git+https://github.com/madler/zlib/"
+};
+
+$PKG.Checksums: {
+    # git doesnt fucking use Checksums
+};
+
+$PKG.Build: {
+    cd zlib
+    ./configure --prefix=/usr
+    make -j$(nproc)
+};
+
+$PKG.Package: {
+    cd zlib
+    make DESTDIR="$PKGDIR" install
+    rm -fv "$PKGDIR"/usr/lib/libz.a
+};

@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: GPL-3.0-only
+# Assisted-by: Tasklet:Claude-Sonnet-4-5 [shell]
+# NOTE: Replace PLACEHOLDER checksums by running:
+#   astral-recipegen checksum <url> sha256
+
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version     = "1.0.1"
+    Description = "XCB utility library for printing X errors"
+    Homepage    = "https://xcb.freedesktop.org"
+    Category    = "x11-libs"
+};
+
+$PKG.Depend.BDepends: {
+    autoconf
+    automake
+    pkg-config
+};
+
+$PKG.Depend.RDepends: {
+    libxcb
+};
+
+$PKG.Sources: {
+    urls = "https://xcb.freedesktop.org/dist/xcb-util-errors-1.0.1.tar.xz"
+};
+
+$PKG.Checksums: {
+    sha256:5628c87b984259ad927bacd8a42958319c36bdf4b065887803c9d820fb80f357 xcb-util-errors-1.0.1.tar.xz
+};
+
+$PKG.Build: {
+    cd xcb-util-errors-1.0.1
+    ./configure --prefix=/usr
+    make -j$(nproc)
+};
+
+$PKG.Package: {
+    cd xcb-util-errors-1.0.1
+    make DESTDIR="$PKGDIR" install
+};

@@ -1,0 +1,33 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version     = "0.9.3"
+    Description = "A seat management library"
+    Homepage    = "https://git.sr.ht/~kennylevinsen/seatd"
+    Category    = "sys-libs"
+};
+
+$PKG.Depend.BDepends: {
+    meson
+    ninja
+    pkg-config
+};
+
+$PKG.Sources: {
+    urls = "https://git.sr.ht/~kennylevinsen/seatd/archive/0.9.3.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:302564d54d8e28191fadfd734f2675ecb0c9e0615a58011b89ef15dfa4dbaa96 0.9.3.tar.gz
+};
+
+$PKG.Build: {
+    cd seatd-0.9.3
+    meson setup build --prefix=/usr -Dman-pages=disabled -Dserver=disabled
+    ninja -C build
+};
+
+$PKG.Package: {
+    cd seatd-0.9.3
+    DESTDIR="$PKGDIR" ninja -C build install
+};

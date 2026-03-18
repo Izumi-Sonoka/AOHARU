@@ -1,0 +1,41 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version     = "1.7.0"
+    Description = "Keyboard handling library"
+    Homepage    = "https://xkbcommon.org"
+    Category    = "x11-libs"
+};
+
+$PKG.Depend.BDepends: {
+    meson
+    ninja
+    pkg-config
+    bison
+};
+
+$PKG.Depend.RDepends: {
+    xkeyboard-config
+    libxcb
+    wayland
+    wayland-protocols
+};
+
+$PKG.Sources: {
+    urls = "https://xkbcommon.org/download/libxkbcommon-1.7.0.tar.xz"
+};
+
+$PKG.Checksums: {
+    sha256:65782f0a10a4b455af9c6baab7040e2f537520caa2ec2092805cdfd36863b247 libxkbcommon-1.7.0.tar.gz
+};
+
+$PKG.Build: {
+    cd libxkbcommon-1.7.0
+    meson setup build --prefix=/usr -Denable-docs=false
+    ninja -C build
+};
+
+$PKG.Package: {
+    cd libxkbcommon-1.7.0
+    DESTDIR="$PKGDIR" ninja -C build install
+};

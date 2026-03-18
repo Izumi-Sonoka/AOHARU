@@ -1,0 +1,34 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version     = "0.4.5"
+    Description = "A Hyprland implementation of wayland-scanner, in and for C++"
+    Homepage    = "https://github.com/hyprwm/hyprwayland-scanner"
+    Category    = "dev-util"
+};
+
+$PKG.Depend.BDepends: {
+    cmake
+    ninja
+    pkg-config
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/hyprwm/hyprwayland-scanner/archive/refs/tags/v0.4.5.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:2125d279eea106e3e6c8dc9fa15181c75d67467b5352d24e2a07903b10abad62 v0.4.5.tar.gz
+};
+
+$PKG.Build: {
+    cd hyprwayland-scanner-0.4.5
+    cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
+    cmake --build build
+};
+
+$PKG.Package: {
+    cd hyprwayland-scanner-0.4.5
+    DESTDIR="$PKGDIR" cmake --install build
+    install -Dm644 LICENSE "$PKGDIR/usr/share/licenses/hyprwayland-scanner/LICENSE"
+};

@@ -21,11 +21,11 @@ $PKG.Depend.RDepends: {
 };
 
 $PKG.Sources: {
-    urls = "https://ftp.gnu.org/gnu/binutils/binutils-2.44.tar.xz"
+    urls = "https://ftpmirror.gnu.org/gnu/binutils/binutils-2.44.tar.xz"
 };
 
 $PKG.Checksums: {
-    sha256:ce2017e059d63e67ddb9240e9d4ec49c2893605035cd60e92ad53177f4377237 binutils-2.44.tar.xz
+    sha256:bc203db1972c31ab9199c964d1748ba0b4e4b75af4fc077129ab4c11d2111392 binutils-2.44.tar.xz
 };
 
 $PKG.Build: {

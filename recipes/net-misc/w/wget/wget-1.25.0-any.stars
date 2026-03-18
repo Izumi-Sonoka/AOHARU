@@ -23,7 +23,7 @@ $PKG.Depend.RDepends: {
 };
 
 $PKG.Sources: {
-    urls = "https://ftp.gnu.org/gnu/wget/wget-1.25.0.tar.gz"
+    urls = "https://ftpmirror.gnu.org/gnu/wget/wget-1.25.0.tar.gz"
 };
 
 $PKG.Checksums: {

@@ -20,7 +20,7 @@ $PKG.Depend.RDepends: {
 };
 
 $PKG.Sources: {
-    urls = "https://ftp.gnu.org/gnu/glibc/glibc-2.41.tar.xz"
+    urls = "https://ftpmirror.gnu.org/gnu/glibc/glibc-2.41.tar.xz"
 };
 
 $PKG.Checksums: {

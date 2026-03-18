@@ -1,0 +1,39 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version     = "2.17"
+    Description = "Little CMS 2 color management library"
+    Homepage    = "https://www.littlecms.com"
+    Category    = "dev-libs"
+};
+
+$PKG.Depend.BDepends: {
+    autoconf
+    automake
+    pkg-config
+};
+
+$PKG.Depend.RDepends: {
+    libjpeg-turbo
+    libtiff
+    zlib
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/mm2/Little-CMS/releases/download/lcms2.17/lcms2-2.17.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:d11af569e42a1baa1650d20ad61d12e41af4fead4aa7964a01f93b08b53ab074 lcms2-2.17.tar.gz
+};
+
+$PKG.Build: {
+    cd lcms2-2.17
+    ./configure --prefix=/usr
+    make -j$(nproc)
+};
+
+$PKG.Package: {
+    cd lcms2-2.17
+    make DESTDIR="$PKGDIR" install
+};

@@ -1,0 +1,33 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version     = "2024.07.02"
+    Description = "Fast, safe, thread-friendly regular expression library"
+    Homepage    = "https://github.com/google/re2"
+    Category    = "dev-libs"
+};
+
+$PKG.Depend.BDepends: {
+    cmake
+    ninja
+    pkg-config
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/google/re2/archive/refs/tags/2024-07-02.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:eb2df807c781601c14a260a507a5bb4509be1ee626024cb45acbd57cb9d4032b 2024-07-02.tar.gz
+};
+
+$PKG.Build: {
+    cd re2-2024-07-02
+    cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DRE2_BUILD_TESTING=OFF
+    cmake --build build
+};
+
+$PKG.Package: {
+    cd re2-2024-07-02
+    DESTDIR="$PKGDIR" cmake --install build
+};

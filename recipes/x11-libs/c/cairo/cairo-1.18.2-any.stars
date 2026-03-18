@@ -1,0 +1,47 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version     = "1.18.2"
+    Description = "A vector graphics library with cross-device output support"
+    Homepage    = "https://cairographics.org"
+    Category    = "x11-libs"
+};
+
+$PKG.Depend.BDepends: {
+    meson
+    ninja
+    pkgconf
+    python3
+};
+
+$PKG.Depend.RDepends: {
+    pixman
+    fontconfig
+    freetype2
+    libpng
+    libxcb
+    libxrender
+    libxext
+    glib2
+    zlib
+};
+
+$PKG.Sources: {
+    urls = "https://cairographics.org/releases/cairo-1.18.2.tar.xz"
+};
+
+$PKG.Checksums: {
+    sha256:a62b9bb42425e844cc3d6ddde043ff39dbabedd1542eba57a2eb79f85889d45a  cairo-1.18.2.tar.xz
+};
+
+$PKG.Build: {
+    cd cairo-1.18.2
+    # Added release buildtype and disabled tests for speed
+    meson setup build --prefix=/usr --buildtype=release -Dtests=disabled
+    ninja -C build
+};
+
+$PKG.Package: {
+    cd cairo-1.18.2
+    DESTDIR="$PKGDIR" ninja -C build install
+};

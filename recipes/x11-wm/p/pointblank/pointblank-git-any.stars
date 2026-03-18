@@ -30,7 +30,7 @@ $PKG.Depend.Optional: {
 };
 
 $PKG.Sources: {
-    urls = "git+https://github.com/Astaraxia-Linux/Pointblank#branch=main"
+    urls = "git+https://github.com/Astaraxia-Linux/Pointblank"
 };
 
 $PKG.Checksums: {

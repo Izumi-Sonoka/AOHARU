@@ -1,0 +1,41 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version     = "1.56.3"
+    Description = "International text layout and rendering library"
+    Homepage    = "https://pango.gnome.org"
+    Category    = "x11-libs"
+};
+
+$PKG.Depend.BDepends: {
+    meson
+    ninja
+    pkg-config
+};
+
+$PKG.Depend.RDepends: {
+    glib2
+    cairo
+    harfbuzz
+    fontconfig
+    fribidi
+};
+
+$PKG.Sources: {
+    urls = "https://download.gnome.org/sources/pango/1.56/pango-1.56.3.tar.xz"
+};
+
+$PKG.Checksums: {
+    sha256:2606252bc25cd8d24e1b7f7e92c3a272b37acd6734347b73b47a482834ba2491 pango-1.56.3.tar.xz
+};
+
+$PKG.Build: {
+    cd pango-1.56.3
+    meson setup build --prefix=/usr -Dintrospection=disabled
+    ninja -C build
+};
+
+$PKG.Package: {
+    cd pango-1.56.3
+    DESTDIR="$PKGDIR" ninja -C build install
+};

@@ -1,0 +1,42 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version     = "0.3.3"
+    Description = "An application to enable a blue-light filter on Hyprland"
+    Homepage    = "https://github.com/hyprwm/hyprsunset"
+    Category    = "gui-apps"
+};
+
+$PKG.Depend.BDepends: {
+    cmake
+    ninja
+    pkg-config
+    hyprwayland-scanner
+};
+
+$PKG.Depend.RDepends: {
+    hyprutils
+    hyprlang
+    wayland
+    wayland-protocols
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/hyprwm/hyprsunset/archive/refs/tags/v0.3.3.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:cf2b3cc836bdeb7ac3ae78cf98e8cc4a06093e8d8215ff4da2380843dcf1a5dc v0.3.3.tar.gz
+};
+
+$PKG.Build: {
+    cd hyprsunset-0.3.3
+    cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
+    cmake --build build
+};
+
+$PKG.Package: {
+    cd hyprsunset-0.3.3
+    DESTDIR="$PKGDIR" cmake --install build
+    install -Dm644 LICENSE "$PKGDIR/usr/share/licenses/hyprsunset/LICENSE"
+};

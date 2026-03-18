@@ -23,7 +23,7 @@ $PKG.Sources: {
 };
 
 $PKG.Checksums: {
-    sha256:036d96991646d0449ed0aa952e4fbe21b476ce994abc276e49d30e686708bd37 unzip60.tar.gz
+    sha256:9b1ddb7da55e547546966a302a95aff2c103c09e4cb1294d1512f04262d7ec2a unzip60.tar.gz
 };
 
 $PKG.Build: {

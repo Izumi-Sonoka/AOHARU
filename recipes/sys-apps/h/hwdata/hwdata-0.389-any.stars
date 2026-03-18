@@ -1,0 +1,30 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version     = "0.389"
+    Description = "Hardware identification and configuration data"
+    Homepage    = "https://github.com/vcrhonek/hwdata"
+    Category    = "sys-apps"
+};
+
+$PKG.Depend.BDepends: {
+    python3
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/vcrhonek/hwdata/archive/refs/tags/v0.389.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:34813e6821a5dab0f663a363026e4d17e880e5f5f2ed49244c42263b226ff98a v0.389.tar.gz
+};
+
+$PKG.Build: {
+    cd hwdata-0.389
+    ./configure --prefix=/usr --disable-blacklist
+};
+
+$PKG.Package: {
+    cd hwdata-0.389
+    make DESTDIR="$PKGDIR" install
+};

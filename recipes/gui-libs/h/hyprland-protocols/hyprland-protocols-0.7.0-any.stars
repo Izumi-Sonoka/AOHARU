@@ -1,0 +1,37 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version     = "0.7.0"
+    Description = "Wayland protocol extensions for Hyprland"
+    Homepage    = "https://github.com/hyprwm/hyprland-protocols"
+    Category    = "gui-libs"
+};
+
+$PKG.Depend.BDepends: {
+    meson
+    ninja
+    pkg-config
+};
+
+$PKG.Depend.RDepends: {
+    wayland-protocols
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/hyprwm/hyprland-protocols/archive/refs/tags/v0.7.0.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:ee419006d7cd20927b9b7c8b5fc430571c151b0385d600508de1a7957294498c v0.7.0.tar.gz
+};
+
+$PKG.Build: {
+    cd hyprland-protocols-0.7.0
+    meson setup build --prefix=/usr
+    ninja -C build
+};
+
+$PKG.Package: {
+    cd hyprland-protocols-0.7.0
+    DESTDIR="$PKGDIR" ninja -C build install
+};

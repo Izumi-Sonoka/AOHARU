@@ -1,0 +1,49 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version     = "0.10.0"
+    Description = "A very light linux rendering backend library"
+    Homepage    = "https://github.com/hyprwm/aquamarine"
+    Category    = "gui-libs"
+};
+
+$PKG.Depend.BDepends: {
+    cmake
+    ninja
+    pkg-config
+    hyprwayland-scanner >= 0.4.0
+};
+
+$PKG.Depend.RDepends: {
+    hyprutils >= 0.8.0
+    libseat >= 0.8.0
+    libinput >= 1.26.0
+    wayland-client
+    wayland-protocols
+    pixman
+    libdrm
+    mesa-gbm
+    libudev
+    libdisplay-info
+    hwdata
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/hyprwm/aquamarine/archive/refs/tags/v0.10.0.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:0ec80c86dd94d7f2836aac9ed415b9170109bd77048de791d837ee729f1ad76a v0.10.0.tar.gz
+};
+
+$PKG.Build: {
+    cd aquamarine-0.10.0
+    cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
+    cmake --build build
+};
+
+$PKG.Package: {
+    cd aquamarine-0.10.0
+    DESTDIR="$PKGDIR" cmake --install build
+    install -Dm644 LICENSE "$PKGDIR/usr/share/licenses/aquamarine/LICENSE"
+};

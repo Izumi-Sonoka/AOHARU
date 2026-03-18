@@ -1,0 +1,39 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version     = "4.0.0"
+    Description = "A cross-platform, open-source build system"
+    Homepage    = "https://cmake.org"
+    Category    = "dev-util"
+};
+
+$PKG.Depend.BDepends: {
+    openssl
+    libcurl
+    zlib
+    expat
+};
+
+$PKG.Depend.RDepends: {
+    libcurl
+    openssl
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/Kitware/CMake/releases/download/v4.0.0/cmake-4.0.0.tar.gz"
+};
+
+$PKG.Checksums: {
+    sha256:ddc54ad63b87e153cf50be450a6580f1b17b4881de8941da963ff56991a4083b cmake-4.0.0.tar.gz
+};
+
+$PKG.Build: {
+    cd cmake-4.0.0
+    ./bootstrap --prefix=/usr --parallel=$(nproc) -- -DCMAKE_USE_SYSTEM_LIBRARIES=ON
+    make -j$(nproc)
+};
+
+$PKG.Package: {
+    cd cmake-4.0.0
+    make DESTDIR="$PKGDIR" install
+};

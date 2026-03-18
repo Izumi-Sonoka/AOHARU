@@ -39,7 +39,7 @@ $PKG.Sources: {
 };
 
 $PKG.Checksums: {
-    sha256:81076aac2020ec53ef6c3e2f6e8b5bee7275dad15c295bacab5c73e2727955ec pipewire-1.4.0.tar.gz
+    sha256:76990e5c25a5fb0f692388b2824909484b8f376d5535d72b314ac578633f2540 pipewire-1.4.0.tar.gz
 };
 
 $PKG.Build: {
@@ -60,6 +60,6 @@ $PKG.Package: {
 };
 
 $PKG.PostInstall: {
-    echo "PipeWire installed. Activate with: systemctl --user enable --now pipewire pipewire-pulse"
+    echo "PipeWire installed. Activate with: systemctl --user enable --now pipewire pipewire-pulse. ew"
     echo "For WirePlumber session manager, install: astral -S wireplumber"
 };

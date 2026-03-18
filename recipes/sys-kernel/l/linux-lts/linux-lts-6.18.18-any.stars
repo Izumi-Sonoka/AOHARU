@@ -1,0 +1,40 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version     = "6.18.18"
+    Description = "The Linux kernel (LTS, supported until Dec 2028)"
+    Homepage    = "https://kernel.org"
+    Category    = "sys-kernel"
+};
+
+$PKG.Depend.BDepends: {
+    bc
+    flex
+    bison
+    openssl
+    kmod
+    perl
+    python3
+    pahole
+};
+
+$PKG.Depend.RDepends: {
+    kmod
+};
+
+$PKG.Sources: {
+    urls = "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.18.18.tar.xz"
+};
+
+$PKG.Checksums: {
+    sha256:f4855f382c1b735c84072bdef36db5bcd5dc7b0c37e42f5104317149a0a486ef linux-6.18.18.tar.xz
+};
+
+$PKG.Build: {
+    cp linux-LTS-6.18.18 /usr/src/linux-LTS-6.18.18
+};
+
+$PKG.Package: {
+    echo "Linux-LTS-6.18.18 in /usr/src"
+    echo "Have fun compiling the kernel!"
+};
