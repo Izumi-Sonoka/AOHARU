@@ -17,7 +17,7 @@ $PKG.Sources: {
 };
 
 $PKG.Checksums: {
-    sha256:0000000000000000000000000000000000000000000000000000000000000000 pkgconf-2.3.0.tar.gz
+    sha256:3a9080ac51d03615e7c1910a0a2a8df08424892b5f13b0628a204d3fcce0ea8b pkgconf-2.3.0.tar.xz
 };
 
 $PKG.Build: {

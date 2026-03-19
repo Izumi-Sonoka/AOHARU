@@ -21,7 +21,7 @@ $PKG.Sources: {
 };
 
 $PKG.Checksums: {
-    sha256:bc203db1972c31ab9199c964d1748ba0b4e4b75af4fc077129ab4c11d2111392 ncurses-6.5.tar.gz
+    sha256:136d91bc269a9a5785e5f9e980bc76ab57428f604ce3e5a5a90cebc767971cc6 ncurses-6.5.tar.gz
 };
 
 $PKG.Build: {

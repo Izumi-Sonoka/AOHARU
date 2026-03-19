@@ -3,7 +3,7 @@ $PKG.Version = "3"
 $PKG.Metadata: {
     Version = "4.99.6"
     Description = "Lists open files — what process has a file or socket open"
-    Homepage = "https://github.com/nicowillis/lsof"
+    Homepage = "https://github.com/lsof-org/lsof"
     Category = "sys-process"
 };
 
@@ -27,7 +27,7 @@ $PKG.Checksums: {
 };
 
 $PKG.Build: {
-    cd lsof-4.99.3
+    cd lsof-4.99.6
     cmake -B build \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX=/usr
@@ -35,6 +35,6 @@ $PKG.Build: {
 };
 
 $PKG.Package: {
-    cd lsof-4.99.3
+    cd lsof-4.99.6
     make -C build DESTDIR="$PKGDIR" install
 };

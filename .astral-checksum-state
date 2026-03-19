@@ -43,7 +43,6 @@
 # checksum-ok: net-misc/curl version=8.12.1 ts=2026-03-18T06:06:35Z
 # checksum-ok: sys-fs/e2fsprogs version=1.47.3 ts=2026-03-18T06:06:35Z
 # checksum-ok: sys-devel/ninja version=1.12.1 ts=2026-03-18T06:06:35Z
-# checksum-ok: sys-process/lsof version=git ts=2026-03-18T06:06:36Z
 # checksum-ok: sys-fs/dosfstools version=4.2 ts=2026-03-18T06:06:36Z
 # checksum-ok: x11-libs/pango version=1.56.3 ts=2026-03-18T06:06:36Z
 # checksum-ok: x11-misc/xdg-desktop-portal-hyprland version=1.3.11 ts=2026-03-18T06:06:36Z
@@ -116,10 +115,12 @@
 # checksum-ok: sys-devel/patch version=2.7.6 ts=2026-03-18T06:29:29Z
 # checksum-ok: sys-libs/glibc version=2.41 ts=2026-03-18T06:29:33Z
 # checksum-ok: app-text/groff version=1.23.0 ts=2026-03-18T06:30:13Z
-# checksum-ok: sys-libs/ncurses version=6.5 ts=2026-03-18T06:30:20Z
 # checksum-ok: app-arch/tar version=1.35 ts=2026-03-18T06:30:54Z
-# checksum-ok: sys-devel/binutils version=2.44 ts=2026-03-18T06:30:57Z
-# checksum-ok: sys-devel/gcc version=14.2.0 ts=2026-03-18T06:35:52Z
 # checksum-ok: sys-libs/readline version=8.2 ts=2026-03-18T06:35:54Z
-# checksum-ok: dev-util/pkgconf version=2.3.0 ts=2026-03-18T06:55:29Z
 # checksum-ok: sys-libs/libseat version=0.9.3 ts=2026-03-18T06:55:50Z
+# checksum-ok: wl-wm/hyprland version=0.54.2 ts=2026-03-19T17:41:15Z
+# checksum-ok: dev-vcs/git version=2.53.0 ts=2026-03-19T17:41:18Z
+# checksum-ok: sys-libs/ncurses version=6.5 ts=2026-03-19T17:41:19Z
+# checksum-ok: sys-devel/gcc version=14.2.0 ts=2026-03-19T17:41:46Z
+# checksum-ok: sys-devel/binutils version=2.44 ts=2026-03-19T17:41:57Z
+# checksum-ok: dev-util/pkgconf version=2.3.0 ts=2026-03-19T23:56:40Z

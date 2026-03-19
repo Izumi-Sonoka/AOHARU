@@ -37,7 +37,7 @@ $PKG.Build: {
     cd git-2.53.0
     make configure
     ./configure --prefix=/usr --with-gitconfig=/etc/gitconfig
-    make all
+    make -j$(nproc) all
 };
 
 $PKG.Package: {
@@ -45,6 +45,7 @@ $PKG.Package: {
     make DESTDIR="$PKGDIR" install
     install -Dm644 COPYING "$PKGDIR/usr/share/licenses/git/COPYING"
 };
+
 $PKG.PostInstall: {
     echo "git installed. Configure with: git config --global user.name \"Your Name\""
 };
