@@ -38,7 +38,10 @@ $PKG.Checksums: {
 
 $PKG.Build: {
     cd hyprlock-0.9.2
-    cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
+    cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_C_FLAGS="$CFLAGS" \
+        -DCMAKE_CXX_FLAGS="$CXXFLAGS" \
+        -DCMAKE_EXE_LINKER_FLAGS="$LDFLAGS"
     cmake --build build
 };
 

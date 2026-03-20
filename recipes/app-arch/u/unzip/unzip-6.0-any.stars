@@ -28,7 +28,7 @@ $PKG.Checksums: {
 
 $PKG.Build: {
     cd unzip60
-    make -f unix/Makefile -j$(nproc) generic \
+    make -f unix/Makefile -j${JOBS:-$(nproc)} generic \
         CFLAGS="$CFLAGS -DBIG_MEM -DMMAP" \
         LF2=""
 };

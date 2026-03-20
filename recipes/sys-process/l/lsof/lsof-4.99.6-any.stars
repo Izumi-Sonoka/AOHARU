@@ -28,10 +28,13 @@ $PKG.Checksums: {
 
 $PKG.Build: {
     cd lsof-4.99.6
-    cmake -B build \
+    cmake -B build \ \
+        -DCMAKE_C_FLAGS="$CFLAGS" \
+        -DCMAKE_CXX_FLAGS="$CXXFLAGS" \
+        -DCMAKE_EXE_LINKER_FLAGS="$LDFLAGS"
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX=/usr
-    make -C build -j$(nproc)
+    make -C build -j${JOBS:-$(nproc)}
 };
 
 $PKG.Package: {

@@ -54,7 +54,7 @@ $PKG.Build: {
         --enable-shared          \
         --with-system-expat      \
         --enable-optimizations
-    make -j$(nproc)
+    make -j${JOBS:-$(nproc)}
 };
 
 $PKG.Package: {

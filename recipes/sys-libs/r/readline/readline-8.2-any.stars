@@ -35,7 +35,7 @@ $PKG.Build: {
         --disable-static   \
         --with-curses      \
         --docdir=/usr/share/doc/readline-8.2
-    make SHLIB_LIBS="-lncursesw" -j$(nproc)
+    make SHLIB_LIBS="-lncursesw" -j${JOBS:-$(nproc)}
 };
 
 $PKG.Package: {

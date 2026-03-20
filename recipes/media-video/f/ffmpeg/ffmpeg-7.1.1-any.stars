@@ -65,7 +65,7 @@ $PKG.Build: {
         --enable-libfreetype \
         --enable-libfontconfig \
         --enable-alsa
-    make -j$(nproc)
+    make -j${JOBS:-$(nproc)}
 };
 
 $PKG.Package: {

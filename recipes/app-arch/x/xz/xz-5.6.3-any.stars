@@ -30,7 +30,7 @@ $PKG.Build: {
         --prefix=/usr \
         --disable-static \
         --docdir=/usr/share/doc/xz-5.6.3
-    make -j$(nproc)
+    make -j${JOBS:-$(nproc)}
 };
 
 $PKG.Package: {

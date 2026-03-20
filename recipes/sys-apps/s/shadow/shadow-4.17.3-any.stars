@@ -36,7 +36,7 @@ $PKG.Build: {
         --with-{b,yes}crypt \
         --with-group-name-max-length=32 \
         --with-libpam
-    make -j$(nproc)
+    make -j${JOBS:-$(nproc)}
 };
 
 $PKG.Package: {

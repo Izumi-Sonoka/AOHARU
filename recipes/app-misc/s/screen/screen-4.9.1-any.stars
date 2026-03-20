@@ -37,7 +37,7 @@ $PKG.Build: {
         --enable-pam \
         --enable-colors256 \
         --enable-rxvt_osc
-    make -j$(nproc)
+    make -j${JOBS:-$(nproc)}
 };
 
 $PKG.Package: {

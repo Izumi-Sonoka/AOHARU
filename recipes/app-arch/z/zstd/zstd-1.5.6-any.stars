@@ -30,7 +30,7 @@ $PKG.Checksums: {
 
 $PKG.Build: {
     cd zstd-1.5.6
-    make -j$(nproc) prefix=/usr
+    make -j${JOBS:-$(nproc)} prefix=/usr
 };
 
 $PKG.Package: {

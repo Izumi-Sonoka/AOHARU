@@ -26,7 +26,7 @@ $PKG.Checksums: {
 
 $PKG.Build: {
     cd fzf-0.60.3
-    make -j$(nproc) FZF_VERSION=0.60.3 FZF_REVISION=release
+    make -j${JOBS:-$(nproc)} FZF_VERSION=0.60.3 FZF_REVISION=release
 };
 
 $PKG.Package: {

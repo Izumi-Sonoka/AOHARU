@@ -34,7 +34,7 @@ $PKG.Build: {
         --disable-static   \
         --with-fuse=internal \
         --docdir=/usr/share/doc/ntfs-3g-2022.10.3
-    make -j$(nproc)
+    make -j${JOBS:-$(nproc)}
 };
 
 $PKG.Package: {

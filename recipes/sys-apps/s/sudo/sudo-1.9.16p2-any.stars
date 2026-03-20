@@ -37,7 +37,7 @@ $PKG.Build: {
         --with-all-insults               \
         --with-env-editor                \
         --with-passprompt="[sudo] password for %p: "
-    make -j$(nproc)
+    make -j${JOBS:-$(nproc)}
 };
 
 $PKG.Package: {

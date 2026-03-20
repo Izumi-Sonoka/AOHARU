@@ -29,7 +29,7 @@ $PKG.Checksums: {
 $PKG.Build: {
     cd libcap-2.73
     sed -i '/install -m.*STA/d' libcap/Makefile
-    make -j$(nproc) prefix=/usr lib=lib
+    make -j${JOBS:-$(nproc)} prefix=/usr lib=lib
 };
 
 $PKG.Package: {

@@ -34,11 +34,14 @@ $PKG.Checksums: {
 
 $PKG.Build: {
     cd fish-4.0.1
-    cmake -B build                      \
+    cmake -B build                      \ \
+        -DCMAKE_C_FLAGS="$CFLAGS" \
+        -DCMAKE_CXX_FLAGS="$CXXFLAGS" \
+        -DCMAKE_EXE_LINKER_FLAGS="$LDFLAGS"
         -DCMAKE_INSTALL_PREFIX=/usr     \
         -DCMAKE_BUILD_TYPE=Release      \
         -DBUILD_SHARED_LIBS=ON
-    cmake --build build -j$(nproc)
+    cmake --build build -j${JOBS:-$(nproc)}
 };
 
 $PKG.Package: {

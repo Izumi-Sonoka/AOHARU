@@ -31,7 +31,10 @@ $PKG.Checksums: {
 
 $PKG.Build: {
     cd libxkbcommon-1.7.0
-    meson setup build --prefix=/usr -Denable-docs=false
+    meson setup build --prefix=/usr -Denable-docs=false \
+        -Dc_args="$CFLAGS" \
+        -Dcpp_args="$CXXFLAGS" \
+        -Dc_link_args="$LDFLAGS"
     ninja -C build
 };
 

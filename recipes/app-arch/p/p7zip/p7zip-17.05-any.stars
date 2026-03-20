@@ -27,7 +27,7 @@ $PKG.Checksums: {
 
 $PKG.Build: {
     cd p7zip-17.05
-    make -j$(nproc) OPTFLAGS="$CFLAGS" all3
+    make -j${JOBS:-$(nproc)} OPTFLAGS="$CFLAGS" all3
 };
 
 $PKG.Package: {

@@ -28,7 +28,7 @@ $PKG.Build: {
     ./configure          \
         --prefix=/usr    \
         --without-guile
-    make -j$(nproc)
+    make -j${JOBS:-$(nproc)}
 };
 
 $PKG.Package: {

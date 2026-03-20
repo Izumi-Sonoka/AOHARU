@@ -41,7 +41,7 @@ $PKG.Build: {
         --disable-werror \
         --enable-64-bit-bfd \
         --with-system-zlib
-    make -j$(nproc) tooldir=/usr
+    make -j${JOBS:-$(nproc)} tooldir=/usr
 };
 
 $PKG.Package: {

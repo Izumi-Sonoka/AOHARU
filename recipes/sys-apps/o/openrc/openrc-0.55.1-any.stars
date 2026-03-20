@@ -30,13 +30,16 @@ $PKG.Checksums: {
 
 $PKG.Build: {
     cd openrc-0.55.1
-    meson setup build    \
+    meson setup build    \ \
+        -Dc_args="$CFLAGS" \
+        -Dcpp_args="$CXXFLAGS" \
+        -Dc_link_args="$LDFLAGS"
         --prefix=/usr    \
         --buildtype=release \
         -D audit=disabled \
         -D pam=true      \
         -D newnet=false
-    ninja -C build -j$(nproc)
+    ninja -C build -j${JOBS:-$(nproc)}
 };
 
 $PKG.Package: {

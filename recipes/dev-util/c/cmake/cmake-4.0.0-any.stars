@@ -30,7 +30,7 @@ $PKG.Checksums: {
 $PKG.Build: {
     cd cmake-4.0.0
     ./bootstrap --prefix=/usr --parallel=$(nproc) -- -DCMAKE_USE_SYSTEM_LIBRARIES=ON
-    make -j$(nproc)
+    make -j${JOBS:-$(nproc)}
 };
 
 $PKG.Package: {

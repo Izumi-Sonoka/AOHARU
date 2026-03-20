@@ -37,7 +37,7 @@ $PKG.Build: {
     cd git-2.53.0
     make configure
     ./configure --prefix=/usr --with-gitconfig=/etc/gitconfig
-    make -j$(nproc) all
+    make -j${JOBS:-$(nproc)} all
 };
 
 $PKG.Package: {

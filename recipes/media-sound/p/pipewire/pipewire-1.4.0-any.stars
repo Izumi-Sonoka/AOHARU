@@ -45,13 +45,16 @@ $PKG.Checksums: {
 $PKG.Build: {
     cd pipewire-1.4.0
     mkdir build && cd build
-    meson setup .. \
+    meson setup .. \ \
+        -Dc_args="$CFLAGS" \
+        -Dcpp_args="$CXXFLAGS" \
+        -Dc_link_args="$LDFLAGS"
         --prefix=/usr \
         --buildtype=release \
         -Dsession-managers=[] \
         -Ddocs=disabled \
         -Dtests=disabled
-    ninja -j$(nproc)
+    ninja -j${JOBS:-$(nproc)}
 };
 
 $PKG.Package: {

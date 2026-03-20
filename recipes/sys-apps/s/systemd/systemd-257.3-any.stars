@@ -50,7 +50,10 @@ $PKG.Checksums: {
 
 $PKG.Build: {
     cd systemd-257.3
-    meson setup build          \
+    meson setup build          \ \
+        -Dc_args="$CFLAGS" \
+        -Dcpp_args="$CXXFLAGS" \
+        -Dc_link_args="$LDFLAGS"
         --prefix=/usr          \
         --buildtype=release    \
         -D default-dnssec=no   \
@@ -67,7 +70,7 @@ $PKG.Build: {
         -D nobody-group=nogroup \
         -D sysupdate=disabled  \
         -D ukify=disabled
-    ninja -C build -j$(nproc)
+    ninja -C build -j${JOBS:-$(nproc)}
 };
 
 $PKG.Package: {

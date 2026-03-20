@@ -33,7 +33,7 @@ $PKG.Build: {
         --sysconfdir=/etc \
         --enable-utf8    \
         --docdir=/usr/share/doc/nano-8.6
-    make -j$(nproc)
+    make -j${JOBS:-$(nproc)}
 };
 
 $PKG.Package: {

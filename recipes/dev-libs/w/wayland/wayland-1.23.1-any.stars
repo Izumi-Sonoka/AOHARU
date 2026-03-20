@@ -30,7 +30,10 @@ $PKG.Checksums: {
 
 $PKG.Build: {
     cd wayland-1.23.1
-    meson setup build --prefix=/usr -Ddocumentation=false
+    meson setup build --prefix=/usr -Ddocumentation=false \
+        -Dc_args="$CFLAGS" \
+        -Dcpp_args="$CXXFLAGS" \
+        -Dc_link_args="$LDFLAGS"
     ninja -C build
 };
 

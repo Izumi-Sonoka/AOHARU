@@ -39,7 +39,7 @@ $PKG.Build: {
         --with-pam \
         --with-ssl-dir=/usr \
         --with-pid-dir=/run
-    make -j$(nproc)
+    make -j${JOBS:-$(nproc)}
 };
 
 $PKG.Package: {

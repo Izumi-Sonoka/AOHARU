@@ -27,7 +27,7 @@ $PKG.Checksums: {
 
 $PKG.Build: {
     cd lua-5.4.7
-    make -j$(nproc) MYCFLAGS="$CFLAGS -fPIC" linux-readline
+    make -j${JOBS:-$(nproc)} MYCFLAGS="$CFLAGS -fPIC" linux-readline
 };
 
 $PKG.Package: {

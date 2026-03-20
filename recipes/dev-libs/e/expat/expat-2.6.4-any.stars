@@ -30,7 +30,7 @@ $PKG.Build: {
         --prefix=/usr      \
         --disable-static   \
         --docdir=/usr/share/doc/expat-2.6.4
-    make -j$(nproc)
+    make -j${JOBS:-$(nproc)}
 };
 
 $PKG.Package: {
