@@ -1,0 +1,39 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "2.8.0"
+    Description = "Linux keyboard utilities"
+    Homepage = "https://kbd-project.org/"
+    Category = "sys-apps"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Depend.RDepends: {
+    gzip
+};
+
+$PKG.Sources: {
+    urls = "https://www.kernel.org/pub/linux/utils/kbd/kbd-2.8.0.tar.xz"
+};
+
+$PKG.Checksums: {
+    md5:24b5d24f7483726b88f214dc6c77aa41 kbd-2.8.0.tar.xz
+};
+
+$PKG.Build: {
+    cd kbd-2.8.0
+    patch -Np1 -i ../kbd-2.8.0-backspace-1.patch || true
+    sed -i '/RESIZECONS_PROGS=/s/yes/no/' configure
+    sed -i 's/resizecons.8 //' docs/man/man8/Makefile.in
+    ./configure --prefix=/usr --disable-vlock
+    make -j${JOBS:-$(nproc)}
+};
+
+$PKG.Package: {
+    cd kbd-2.8.0
+    make DESTDIR="$PKGDIR" install
+};

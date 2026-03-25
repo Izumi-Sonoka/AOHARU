@@ -1,0 +1,36 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "4.4.38"
+    Description = "Extended crypt library for descrypt, md5crypt, bcrypt, and others"
+    Homepage = "https://github.com/besser82/libxcrypt"
+    Category = "sys-libs"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/besser82/libxcrypt/releases/download/v4.4.38/libxcrypt-4.4.38.tar.xz"
+};
+
+$PKG.Checksums: {
+    md5:1796a5d20098e9dd9e3f576803c83000 libxcrypt-4.4.38.tar.xz
+};
+
+$PKG.Build: {
+    cd libxcrypt-4.4.38
+    ./configure --prefix=/usr \
+                --enable-hashes=strong,glibc \
+                --enable-obsolete-api=no \
+                --disable-static \
+                --disable-failure-tokens
+    make -j${JOBS:-$(nproc)}
+};
+
+$PKG.Package: {
+    cd libxcrypt-4.4.38
+    make DESTDIR="$PKGDIR" install
+};

@@ -1,0 +1,26 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "20250807"
+    Description = "Critical data for network services and protocols"
+    Homepage = "https://www.iana.org/protocols"
+    Category = "sys-apps"
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/Mic92/iana-etc/releases/download/20250807/iana-etc-20250807.tar.gz"
+};
+
+$PKG.Checksums: {
+    md5:de0a909103d4ff59d1424c5ec7ac9e4a iana-etc-20250807.tar.gz
+};
+
+$PKG.Build: {
+    cd iana-etc-20250807
+};
+
+$PKG.Package: {
+    cd iana-etc-20250807
+    install -Dm644 services "$PKGDIR/etc/services"
+    install -Dm644 protocols "$PKGDIR/etc/protocols"
+};

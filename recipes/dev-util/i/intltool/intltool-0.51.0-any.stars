@@ -1,0 +1,35 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "0.51.0"
+    Description = "Internationalization tool collection"
+    Homepage = "https://freedesktop.org/wiki/Software/intltool"
+    Category = "dev-util"
+};
+
+$PKG.Depend.BDepends: {
+    make
+    perl
+    xml-parser
+};
+
+$PKG.Sources: {
+    urls = "https://launchpad.net/intltool/trunk/0.51.0/+download/intltool-0.51.0.tar.gz"
+};
+
+$PKG.Checksums: {
+    md5:12e517cac2b57a0121cda351570f1e63 intltool-0.51.0.tar.gz
+};
+
+$PKG.Build: {
+    cd intltool-0.51.0
+    sed -i 's:\\\${:\\\$\\{:' intltool-update.in
+    ./configure --prefix=/usr
+    make -j${JOBS:-$(nproc)}
+};
+
+$PKG.Package: {
+    cd intltool-0.51.0
+    make DESTDIR="$PKGDIR" install
+    install -Dm644 doc/I18N-HOWTO "$PKGDIR/usr/share/doc/intltool-0.51.0/I18N-HOWTO"
+};

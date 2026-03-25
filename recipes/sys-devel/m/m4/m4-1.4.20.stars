@@ -1,0 +1,36 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "1.4.20"
+    Description = "GNU M4 is an implementation of the traditional Unix macro processor. It is mostly SVR4 compatible although it has some extensions (for example, handling more than 9 positional parameters to macros). GNU M4 also has built-in functions for including files, running shell commands, doing arithmetic, etc."
+    Homepage = "https://www.gnu.org/software/m4/"
+    Category = "sys-devel"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+};
+
+$PKG.Depend.RDepends: {
+    glibc
+};
+
+$PKG.Sources: {
+    urls = "https://ftp.gnu.org/gnu/m4/m4-1.4.20.tar.xz"
+};
+
+$PKG.Checksums: {
+    sha256:dd16fb1d67bfab79a72f5e8390735c49e3e8e70b4945a15ab1f81ddb78658fb3 m4-1.4.20.tar.gz
+};
+
+$PKG.Build: {
+    cd m4-1.4.20
+    ./configure --prefix=/usr
+    make -j${JOBS:-$(nproc)}
+    make check
+};
+
+$PKG.Package: {
+    cd m4-1.4.20
+    make DESTDIR="$PKGDIR" install
+};

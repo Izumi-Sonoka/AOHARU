@@ -1,0 +1,42 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "0.193"
+    Description = "Libraries and utilities for ELF files (libelf)"
+    Homepage = "https://sourceware.org/elfutils/"
+    Category = "dev-libs"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Depend.RDepends: {
+    zlib
+    bzip2
+    xz
+};
+
+$PKG.Sources: {
+    urls = "https://sourceware.org/ftp/elfutils/0.193/elfutils-0.193.tar.bz2"
+};
+
+$PKG.Checksums: {
+    md5:ceefa052ded950a4c523688799193a44 elfutils-0.193.tar.bz2
+};
+
+$PKG.Build: {
+    cd elfutils-0.193
+    ./configure --prefix=/usr \
+                --disable-debuginfod \
+                --enable-libdebuginfod=dummy
+    make -j${JOBS:-$(nproc)}
+};
+
+$PKG.Package: {
+    cd elfutils-0.193
+    make DESTDIR="$PKGDIR" install
+    install -Dm644 config/libelf.pc "$PKGDIR/usr/lib/pkgconfig/libelf.pc"
+    rm -f "$PKGDIR/usr/lib/libelf.a"
+};

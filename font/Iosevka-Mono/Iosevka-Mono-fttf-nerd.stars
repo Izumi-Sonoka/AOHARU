@@ -1,0 +1,6 @@
+$FONT.Metadata: {
+    Family   = "Iosevka"
+    Style    = "Mono"
+    FontType = "ttf"
+    Nerd     = "true"
+};

@@ -1,0 +1,38 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "7.2"
+    Description = "GNU documentation system"
+    Homepage = "https://www.gnu.org/software/texinfo/"
+    Category = "sys-apps"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Depend.RDepends: {
+    perl
+    ncurses
+};
+
+$PKG.Sources: {
+    urls = "https://ftp.gnu.org/gnu/texinfo/texinfo-7.2.tar.xz"
+};
+
+$PKG.Checksums: {
+    md5:11939a7624572814912a18e76c8d8972 texinfo-7.2.tar.xz
+};
+
+$PKG.Build: {
+    cd texinfo-7.2
+    ./configure --prefix=/usr
+    make -j${JOBS:-$(nproc)}
+};
+
+$PKG.Package: {
+    cd texinfo-7.2
+    make DESTDIR="$PKGDIR" install
+    make DESTDIR="$PKGDIR" TEXMF=/usr/share/texmf install-tex
+};

@@ -1,0 +1,39 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "2.6.4"
+    Description = "Fast lexical analyser generator"
+    Homepage = "https://github.com/westes/flex"
+    Category = "sys-devel"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Depend.RDepends: {
+    m4
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/westes/flex/releases/download/v2.6.4/flex-2.6.4.tar.gz"
+};
+
+$PKG.Checksums: {
+    md5:2882e3179748cc9f9c23ec593d6adc8d flex-2.6.4.tar.gz
+};
+
+$PKG.Build: {
+    cd flex-2.6.4
+    ./configure --prefix=/usr \
+                --docdir=/usr/share/doc/flex-2.6.4 \
+                --disable-static
+    make -j${JOBS:-$(nproc)}
+};
+
+$PKG.Package: {
+    cd flex-2.6.4
+    make DESTDIR="$PKGDIR" install
+    ln -sv flex "$PKGDIR/usr/bin/lex"
+};

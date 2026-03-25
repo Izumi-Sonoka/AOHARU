@@ -1,0 +1,34 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "5.3.2"
+    Description = "GNU implementation of awk"
+    Homepage = "https://www.gnu.org/software/gawk/"
+    Category = "sys-apps"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Sources: {
+    urls = "https://ftp.gnu.org/gnu/gawk/gawk-5.3.2.tar.xz"
+};
+
+$PKG.Checksums: {
+    md5:b7014650c5f45e5d4837c31209dc0037 gawk-5.3.2.tar.xz
+};
+
+$PKG.Build: {
+    cd gawk-5.3.2
+    sed -i 's/extras//' Makefile.in
+    ./configure --prefix=/usr
+    make -j${JOBS:-$(nproc)}
+};
+
+$PKG.Package: {
+    cd gawk-5.3.2
+    make DESTDIR="$PKGDIR" install
+    ln -sv gawk "$PKGDIR/usr/bin/awk"
+};

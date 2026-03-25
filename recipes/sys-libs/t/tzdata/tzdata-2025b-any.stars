@@ -1,0 +1,40 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "2025b"
+    Description = "Timezone data"
+    Homepage = "https://www.iana.org/time-zones"
+    Category = "sys-libs"
+};
+
+$PKG.Depend.BDepends: {
+    make
+};
+
+$PKG.Sources: {
+    urls = "https://www.iana.org/time-zones/repository/releases/tzdata2025b.tar.gz"
+};
+
+$PKG.Checksums: {
+    md5:ad65154c48c74a9b311fe84778c5434f tzdata2025b.tar.gz
+};
+
+$PKG.Build: {
+    mkdir -p tzdata-build
+    cd tzdata-build
+    tar -xf ../tzdata2025b.tar.gz
+    ZONEINFO=/usr/share/zoneinfo
+    mkdir -p "$PKGDIR$ZONEINFO"/{posix,right}
+    for tz in etcetera southamerica northamerica europe africa antarctica \
+               asia australasia backward; do
+        zic -L /dev/null -d "$PKGDIR$ZONEINFO" ${tz}
+        zic -L /dev/null -d "$PKGDIR$ZONEINFO/posix" ${tz}
+        zic -L leapseconds -d "$PKGDIR$ZONEINFO/right" ${tz}
+    done
+    cp -v zone.tab zone1970.tab iso3166.tab "$PKGDIR$ZONEINFO"
+    zic -d "$PKGDIR$ZONEINFO" -p America/New_York
+};
+
+$PKG.Package: {
+    install -Dm644 /usr/share/zoneinfo/UTC "$PKGDIR/etc/localtime" || true
+};

@@ -1,0 +1,35 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "2.5.2"
+    Description = "Extended attribute support library"
+    Homepage = "https://savannah.nongnu.org/projects/attr"
+    Category = "sys-libs"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Sources: {
+    urls = "https://download.savannah.gnu.org/releases/attr/attr-2.5.2.tar.gz"
+};
+
+$PKG.Checksums: {
+    md5:227043ec2f6ca03c0948df5517f9c927 attr-2.5.2.tar.gz
+};
+
+$PKG.Build: {
+    cd attr-2.5.2
+    ./configure --prefix=/usr \
+                --disable-static \
+                --sysconfdir=/etc \
+                --docdir=/usr/share/doc/attr-2.5.2
+    make -j${JOBS:-$(nproc)}
+};
+
+$PKG.Package: {
+    cd attr-2.5.2
+    make DESTDIR="$PKGDIR" install
+};

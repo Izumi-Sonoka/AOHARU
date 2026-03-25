@@ -1,0 +1,32 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "3.3"
+    Description = "Perfect hash function generator"
+    Homepage = "https://www.gnu.org/software/gperf/"
+    Category = "dev-util"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Sources: {
+    urls = "https://ftp.gnu.org/gnu/gperf/gperf-3.3.tar.gz"
+};
+
+$PKG.Checksums: {
+    md5:31753b021ea78a21f154bf9eecb8b079 gperf-3.3.tar.gz
+};
+
+$PKG.Build: {
+    cd gperf-3.3
+    ./configure --prefix=/usr --docdir=/usr/share/doc/gperf-3.3
+    make -j${JOBS:-$(nproc)}
+};
+
+$PKG.Package: {
+    cd gperf-3.3
+    make DESTDIR="$PKGDIR" install
+};

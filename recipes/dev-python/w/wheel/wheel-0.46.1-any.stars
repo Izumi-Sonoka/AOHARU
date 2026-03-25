@@ -1,0 +1,34 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "0.46.1"
+    Description = "Built-package format for Python"
+    Homepage = "https://pypi.org/project/wheel/"
+    Category = "dev-python"
+};
+
+$PKG.Depend.BDepends: {
+    python3
+    flit-core
+};
+
+$PKG.Sources: {
+    urls = "https://pypi.org/packages/source/w/wheel/wheel-0.46.1.tar.gz"
+};
+
+$PKG.Checksums: {
+    md5:65e09ee84af36821e3b1e9564aa91bd5 wheel-0.46.1.tar.gz
+};
+
+$PKG.Build: {
+    cd wheel-0.46.1
+};
+
+$PKG.Package: {
+    cd wheel-0.46.1
+    pip3 install --no-build-isolation \
+                 --no-deps \
+                 --prefix=/usr \
+                 --root="$PKGDIR" \
+                 .
+};

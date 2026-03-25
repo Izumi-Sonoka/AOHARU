@@ -1,0 +1,34 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "1.26"
+    Description = "GNU database manager"
+    Homepage = "https://www.gnu.org/software/gdbm/"
+    Category = "dev-libs"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Sources: {
+    urls = "https://ftp.gnu.org/gnu/gdbm/gdbm-1.26.tar.gz"
+};
+
+$PKG.Checksums: {
+    md5:aaa600665bc89e2febb3c7bd90679115 gdbm-1.26.tar.gz
+};
+
+$PKG.Build: {
+    cd gdbm-1.26
+    ./configure --prefix=/usr \
+                --disable-static \
+                --enable-libgdbm-compat
+    make -j${JOBS:-$(nproc)}
+};
+
+$PKG.Package: {
+    cd gdbm-1.26
+    make DESTDIR="$PKGDIR" install
+};

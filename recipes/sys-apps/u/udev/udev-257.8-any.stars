@@ -1,0 +1,73 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "257.8"
+    Description = "Device manager for the Linux kernel (udev from systemd)"
+    Homepage = "https://github.com/systemd/systemd"
+    Category = "sys-apps"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    meson
+    ninja
+    python3
+    jinja2
+    markupsafe
+};
+
+$PKG.Depend.RDepends: {
+    kmod
+    libcap
+    acl
+    elfutils
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/systemd/systemd/archive/v257.8/systemd-257.8.tar.gz"
+};
+
+$PKG.Checksums: {
+    md5:25fe5d328e22641254761f1baa74cee0 systemd-257.8.tar.gz
+};
+
+$PKG.Build: {
+    cd systemd-257.8
+    sed -i -e 's/GROUP="render"/GROUP="video"/' \
+           -e 's/GROUP="sgx", //' \
+           rules.d/50-udev-default.rules.in
+    sed -i -e '/systemd-sysctl/d' \
+           rules.d/99-systemd.rules.in
+    sed '/disable python/,+2d' -i meson.build
+    mkdir -p build
+    cd build
+    meson setup .. \
+        --prefix=/usr \
+        --buildtype=release \
+        -D mode=release \
+        -D dev-kvm-mode=0660 \
+        -D link-udev-shared=false \
+        -D logind=false \
+        -D vconsole=false \
+        -Dc_args="$CFLAGS" \
+        -Dcpp_args="$CXXFLAGS" \
+        -Dc_link_args="$LDFLAGS"
+    ninja -j${JOBS:-$(nproc)} udevadm systemd-hwdb udev:shared \
+        $(grep -o "rules.d/[^']*" ../rules.d/meson.build | tr '\n' ' ') \
+        $(realpath libudev.so --relative-to .)
+};
+
+$PKG.Package: {
+    cd systemd-257.8/build
+    DESTDIR="$PKGDIR" ninja install-udevadm install-systemd-hwdb
+    install -Dm755 libudev.so.1.7.8 "$PKGDIR/usr/lib/libudev.so.1.7.8"
+    ln -sfv libudev.so.1.7.8 "$PKGDIR/usr/lib/libudev.so.1"
+    ln -sfv libudev.so.1.7.8 "$PKGDIR/usr/lib/libudev.so"
+    install -Dm644 ../src/libudev/libudev.h "$PKGDIR/usr/include/libudev.h"
+    mkdir -p "$PKGDIR/usr/lib/udev/rules.d"
+    for f in rules.d/*.rules; do
+        install -Dm644 "$f" "$PKGDIR/usr/lib/udev/rules.d/$(basename $f)"
+    done
+    mkdir -p "$PKGDIR/usr/sbin"
+    ln -sfv ../bin/udevadm "$PKGDIR/usr/sbin/udevd"
+};

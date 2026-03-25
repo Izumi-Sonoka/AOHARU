@@ -1,0 +1,51 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "9.1.1629"
+    Description = "Highly configurable text editor"
+    Homepage = "https://www.vim.org/"
+    Category = "app-editors"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Depend.RDepends: {
+    ncurses
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/vim/vim/archive/v9.1.1629/vim-9.1.1629.tar.gz"
+};
+
+$PKG.Checksums: {
+    md5:4f856c3233c1c4570bc17572e4f9e8e4 vim-9.1.1629.tar.gz
+};
+
+$PKG.Build: {
+    cd vim-9.1.1629
+    echo '#define SYS_VIMRC_FILE "/etc/vimrc"' >> src/feature.h
+    ./configure --prefix=/usr
+    make -j${JOBS:-$(nproc)}
+};
+
+$PKG.Package: {
+    cd vim-9.1.1629
+    make DESTDIR="$PKGDIR" install
+    ln -sv vim "$PKGDIR/usr/bin/vi"
+    for L in /usr/share/man/{,*/}man1/vim.1; do
+        ln -sv vim.1 "$(dirname $L)/vi.1"
+    done
+    ln -sv ../vim/vim91/doc "$PKGDIR/usr/share/doc/vim-9.1.1629"
+    cat > "$PKGDIR/etc/vimrc" << 'EOF'
+set nocompatible
+set backspace=2
+set mouse=
+syntax on
+if (&term == "xterm") || (&term == "putty")
+  set background=dark
+endif
+EOF
+};

@@ -1,0 +1,32 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "5.46"
+    Description = "Utility to determine file type"
+    Homepage = "https://www.darwinsys.com/file/"
+    Category = "sys-apps"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Sources: {
+    urls = "https://astron.com/pub/file/file-5.46.tar.gz"
+};
+
+$PKG.Checksums: {
+    md5:459da2d4b534801e2e2861611d823864 file-5.46.tar.gz
+};
+
+$PKG.Build: {
+    cd file-5.46
+    ./configure --prefix=/usr
+    make -j${JOBS:-$(nproc)}
+};
+
+$PKG.Package: {
+    cd file-5.46
+    make DESTDIR="$PKGDIR" install
+};

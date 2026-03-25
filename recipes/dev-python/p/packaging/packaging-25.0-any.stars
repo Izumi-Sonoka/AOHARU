@@ -1,0 +1,34 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "25.0"
+    Description = "Core Python packaging utilities"
+    Homepage = "https://pypi.org/project/packaging/"
+    Category = "dev-python"
+};
+
+$PKG.Depend.BDepends: {
+    python3
+    flit-core
+};
+
+$PKG.Sources: {
+    urls = "https://files.pythonhosted.org/packages/source/p/packaging/packaging-25.0.tar.gz"
+};
+
+$PKG.Checksums: {
+    md5:ab0ef21ddebe09d1803575120d3f99f8 packaging-25.0.tar.gz
+};
+
+$PKG.Build: {
+    cd packaging-25.0
+};
+
+$PKG.Package: {
+    cd packaging-25.0
+    pip3 install --no-build-isolation \
+                 --no-deps \
+                 --prefix=/usr \
+                 --root="$PKGDIR" \
+                 .
+};

@@ -1,0 +1,45 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "2.12"
+    Description = "GNU GRand Unified Bootloader"
+    Homepage = "https://www.gnu.org/software/grub/"
+    Category = "sys-boot"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+    bison
+    flex
+    python3
+};
+
+$PKG.Depend.RDepends: {
+    xz
+    gettext
+};
+
+$PKG.Sources: {
+    urls = "https://ftp.gnu.org/gnu/grub/grub-2.12.tar.xz"
+};
+
+$PKG.Checksums: {
+    md5:60c564b1bdc39d8e43b3aab4bc0fb140 grub-2.12.tar.xz
+};
+
+$PKG.Build: {
+    cd grub-2.12
+    unset {C,CPP,CXX,LD}FLAGS
+    ./configure --prefix=/usr \
+                --sysconfdir=/etc \
+                --disable-efiemu \
+                --disable-werror
+    make -j${JOBS:-$(nproc)}
+};
+
+$PKG.Package: {
+    cd grub-2.12
+    make DESTDIR="$PKGDIR" install
+    mv -v "$PKGDIR/etc/bash_completion.d/grub" "$PKGDIR/usr/share/bash-completion/completions/"
+};

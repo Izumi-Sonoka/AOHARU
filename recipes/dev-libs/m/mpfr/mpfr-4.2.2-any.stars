@@ -1,0 +1,41 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "4.2.2"
+    Description = "Multiple precision floating-point library"
+    Homepage = "https://www.mpfr.org/"
+    Category = "dev-libs"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Depend.RDepends: {
+    gmp
+};
+
+$PKG.Sources: {
+    urls = "https://ftp.gnu.org/gnu/mpfr/mpfr-4.2.2.tar.xz"
+};
+
+$PKG.Checksums: {
+    md5:7c32c39b8b6e3ae85f25156228156061 mpfr-4.2.2.tar.xz
+};
+
+$PKG.Build: {
+    cd mpfr-4.2.2
+    ./configure --prefix=/usr \
+                --disable-static \
+                --enable-thread-safe \
+                --docdir=/usr/share/doc/mpfr-4.2.2
+    make -j${JOBS:-$(nproc)}
+    make html
+};
+
+$PKG.Package: {
+    cd mpfr-4.2.2
+    make DESTDIR="$PKGDIR" install
+    make DESTDIR="$PKGDIR" install-html
+};

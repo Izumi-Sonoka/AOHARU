@@ -1,0 +1,37 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "6.3.0"
+    Description = "GNU multiple precision arithmetic library"
+    Homepage = "https://www.gnu.org/software/gmp/"
+    Category = "dev-libs"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Sources: {
+    urls = "https://ftp.gnu.org/gnu/gmp/gmp-6.3.0.tar.xz"
+};
+
+$PKG.Checksums: {
+    md5:956dc04e864001a9c22429f761f2c283 gmp-6.3.0.tar.xz
+};
+
+$PKG.Build: {
+    cd gmp-6.3.0
+    ./configure --prefix=/usr \
+                --enable-cxx \
+                --disable-static \
+                --docdir=/usr/share/doc/gmp-6.3.0
+    make -j${JOBS:-$(nproc)}
+    make html
+};
+
+$PKG.Package: {
+    cd gmp-6.3.0
+    make DESTDIR="$PKGDIR" install
+    make DESTDIR="$PKGDIR" install-html
+};

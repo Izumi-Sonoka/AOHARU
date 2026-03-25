@@ -1,0 +1,42 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "2.6"
+    Description = "GNU network utilities"
+    Homepage = "https://www.gnu.org/software/inetutils/"
+    Category = "net-misc"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Sources: {
+    urls = "https://ftp.gnu.org/gnu/inetutils/inetutils-2.6.tar.xz"
+};
+
+$PKG.Checksums: {
+    md5:401d7d07682a193960bcdecafd03de94 inetutils-2.6.tar.xz
+};
+
+$PKG.Build: {
+    cd inetutils-2.6
+    ./configure --prefix=/usr \
+                --bindir=/usr/bin \
+                --localstatedir=/var \
+                --disable-logger \
+                --disable-whois \
+                --disable-rcp \
+                --disable-rexec \
+                --disable-rlogin \
+                --disable-rsh \
+                --disable-servers
+    make -j${JOBS:-$(nproc)}
+};
+
+$PKG.Package: {
+    cd inetutils-2.6
+    make DESTDIR="$PKGDIR" install
+    mv -v "$PKGDIR/usr/bin/"{hostname,ping,ping6,traceroute} "$PKGDIR/usr/bin/"
+};

@@ -1,0 +1,49 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "8.6.16"
+    Description = "Tool Command Language"
+    Homepage = "https://www.tcl.tk/"
+    Category = "dev-lang"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Sources: {
+    urls = "https://downloads.sourceforge.net/tcl/tcl8.6.16-src.tar.gz"
+};
+
+$PKG.Checksums: {
+    md5:eaef5d0a27239fb840f04af8ec608242 tcl8.6.16-src.tar.gz
+};
+
+$PKG.Build: {
+    cd tcl8.6.16/unix
+    ./configure --prefix=/usr \
+                --mandir=/usr/share/man \
+                --disable-rpath
+    make -j${JOBS:-$(nproc)}
+    sed -e "s|$PWD/tcl8.6.16/unix|/usr/lib|" \
+        -e "s|$PWD/tcl8.6.16|/usr/include|" \
+        -i tclConfig.sh
+    sed -e "s|$PWD/tcl8.6.16/unix/pkgs/tdbc1.1.10|/usr/lib/tdbc1.1.10|" \
+        -e "s|$PWD/tcl8.6.16/pkgs/tdbc1.1.10/generic||" \
+        -e "s|$PWD/tcl8.6.16/pkgs/tdbc1.1.10/library|/usr/lib/tcl8.6|" \
+        -e "s|$PWD/tcl8.6.16/pkgs/tdbc1.1.10||" \
+        -i pkgs/tdbc1.1.10/tdbcConfig.sh
+    sed -e "s|$PWD/tcl8.6.16/unix/pkgs/itcl4.3.2|/usr/lib/itcl4.3.2|" \
+        -e "s|$PWD/tcl8.6.16/pkgs/itcl4.3.2/generic||" \
+        -e "s|$PWD/tcl8.6.16/pkgs/itcl4.3.2||" \
+        -i pkgs/itcl4.3.2/itclConfig.sh
+};
+
+$PKG.Package: {
+    cd tcl8.6.16/unix
+    make DESTDIR="$PKGDIR" install
+    make DESTDIR="$PKGDIR" install-private-headers
+    ln -sfv tclsh8.6 "$PKGDIR/usr/bin/tclsh"
+    chmod 755 "$PKGDIR/usr/lib/libtcl8.6.so"
+};

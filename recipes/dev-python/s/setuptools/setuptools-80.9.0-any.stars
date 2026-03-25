@@ -1,0 +1,35 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "80.9.0"
+    Description = "Easily download, build, install, upgrade, and uninstall Python packages"
+    Homepage = "https://pypi.org/project/setuptools/"
+    Category = "dev-python"
+};
+
+$PKG.Depend.BDepends: {
+    python3
+    flit-core
+    wheel
+};
+
+$PKG.Sources: {
+    urls = "https://pypi.org/packages/source/s/setuptools/setuptools-80.9.0.tar.gz"
+};
+
+$PKG.Checksums: {
+    md5:82e1d67883b713f9493659b50d13b436 setuptools-80.9.0.tar.gz
+};
+
+$PKG.Build: {
+    cd setuptools-80.9.0
+};
+
+$PKG.Package: {
+    cd setuptools-80.9.0
+    pip3 install --no-build-isolation \
+                 --no-deps \
+                 --prefix=/usr \
+                 --root="$PKGDIR" \
+                 .
+};

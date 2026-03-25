@@ -1,0 +1,38 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "3.8.2"
+    Description = "Bison is a general-purpose parser generator that converts an annotated context-free grammar into a deterministic LR or generalized LR (GLR) parser employing LALR(1) parser tables. As an experimental feature, Bison can also generate IELR(1) or canonical LR(1) parser tables. Once you are proficient with Bison, you can use it to develop a wide range of language parsers, from those used in simple desk calculators to complex programming languages."
+    Homepage = "https://www.gnu.org/software/bison/"
+    Category = "sys-devel"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+    m4
+    perl
+};
+
+$PKG.Depend.RDepends: {
+};
+
+$PKG.Sources: {
+    urls = "https://ftpmirror.gnu.org/gnu/bison/bison-3.8.2.tar.xz"
+};
+
+$PKG.Checksums: {
+    sha256:ce2017e059d63e67ddb9240e9d4ec49c2893605035cd60e92ad53177f4377237 bison-3.8.2.tar.xz
+};
+
+$PKG.Build: {
+    cd bison-3.8.2
+    ./configure --prefix=/usr \
+            --docdir=/usr/share/doc/bison-3.8.2
+    make -j${JOBS:-$(nproc)}
+};
+
+$PKG.Package: {
+    cd bison-3.8.2
+    make DESTDIR="$PKGDIR" install
+};

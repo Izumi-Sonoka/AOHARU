@@ -1,0 +1,32 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "1.5.8"
+    Description = "Pipeline manipulation library"
+    Homepage = "https://libpipeline.nongnu.org/"
+    Category = "dev-libs"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Sources: {
+    urls = "https://download.savannah.gnu.org/releases/libpipeline/libpipeline-1.5.8.tar.gz"
+};
+
+$PKG.Checksums: {
+    md5:17ac6969b2015386bcb5d278a08a40b5 libpipeline-1.5.8.tar.gz
+};
+
+$PKG.Build: {
+    cd libpipeline-1.5.8
+    ./configure --prefix=/usr
+    make -j${JOBS:-$(nproc)}
+};
+
+$PKG.Package: {
+    cd libpipeline-1.5.8
+    make DESTDIR="$PKGDIR" install
+};

@@ -1,0 +1,33 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "2.5.4"
+    Description = "Generic library support script"
+    Homepage = "https://www.gnu.org/software/libtool/"
+    Category = "sys-devel"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Sources: {
+    urls = "https://ftp.gnu.org/gnu/libtool/libtool-2.5.4.tar.xz"
+};
+
+$PKG.Checksums: {
+    md5:22e0a29df8af5fdde276ea3a7d351d30 libtool-2.5.4.tar.xz
+};
+
+$PKG.Build: {
+    cd libtool-2.5.4
+    ./configure --prefix=/usr --disable-static
+    make -j${JOBS:-$(nproc)}
+};
+
+$PKG.Package: {
+    cd libtool-2.5.4
+    make DESTDIR="$PKGDIR" install
+    rm -fv "$PKGDIR/usr/lib/libltdl.a"
+};

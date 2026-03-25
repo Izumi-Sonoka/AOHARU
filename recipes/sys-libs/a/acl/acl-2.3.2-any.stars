@@ -1,0 +1,38 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "2.3.2"
+    Description = "Access control list utilities"
+    Homepage = "https://savannah.nongnu.org/projects/acl"
+    Category = "sys-libs"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Depend.RDepends: {
+    attr
+};
+
+$PKG.Sources: {
+    urls = "https://download.savannah.gnu.org/releases/acl/acl-2.3.2.tar.xz"
+};
+
+$PKG.Checksums: {
+    md5:590765dee95907dbc3c856f7255bd669 acl-2.3.2.tar.xz
+};
+
+$PKG.Build: {
+    cd acl-2.3.2
+    ./configure --prefix=/usr \
+                --disable-static \
+                --docdir=/usr/share/doc/acl-2.3.2
+    make -j${JOBS:-$(nproc)}
+};
+
+$PKG.Package: {
+    cd acl-2.3.2
+    make DESTDIR="$PKGDIR" install
+};

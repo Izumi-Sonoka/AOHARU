@@ -1,0 +1,39 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "5.45.4"
+    Description = "Programmed dialogue with interactive programs"
+    Homepage = "https://core.tcl.tk/expect/"
+    Category = "dev-lang"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+    tcl
+};
+
+$PKG.Sources: {
+    urls = "https://prdownloads.sourceforge.net/expect/expect5.45.4.tar.gz"
+};
+
+$PKG.Checksums: {
+    md5:00fce8de158422f5ccd2666512329bd2 expect5.45.4.tar.gz
+};
+
+$PKG.Build: {
+    cd expect5.45.4
+    python3 -c 'import sys; print(sys.version_info[:2])'
+    ./configure --prefix=/usr \
+                --with-tcl=/usr/lib \
+                --enable-shared \
+                --mandir=/usr/share/man \
+                --with-tclinclude=/usr/include
+    make -j${JOBS:-$(nproc)}
+};
+
+$PKG.Package: {
+    cd expect5.45.4
+    make DESTDIR="$PKGDIR" install
+    ln -svf expect5.45.4/libexpect5.45.4.so "$PKGDIR/usr/lib/"
+};

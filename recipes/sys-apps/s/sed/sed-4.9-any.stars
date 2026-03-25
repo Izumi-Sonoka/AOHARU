@@ -1,0 +1,34 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "4.9"
+    Description = "GNU stream editor"
+    Homepage = "https://www.gnu.org/software/sed/"
+    Category = "sys-apps"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Sources: {
+    urls = "https://ftp.gnu.org/gnu/sed/sed-4.9.tar.xz"
+};
+
+$PKG.Checksums: {
+    md5:6aac9b2dbafcd5b7a67a8a9bcb8036c3 sed-4.9.tar.xz
+};
+
+$PKG.Build: {
+    cd sed-4.9
+    ./configure --prefix=/usr
+    make -j${JOBS:-$(nproc)}
+    make html
+};
+
+$PKG.Package: {
+    cd sed-4.9
+    make DESTDIR="$PKGDIR" install
+    install -Dm644 doc/sed.html "$PKGDIR/usr/share/doc/sed-4.9/sed.html"
+};

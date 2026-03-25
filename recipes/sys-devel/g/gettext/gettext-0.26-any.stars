@@ -1,0 +1,35 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "0.26"
+    Description = "GNU internationalization utilities"
+    Homepage = "https://www.gnu.org/software/gettext/"
+    Category = "sys-devel"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Sources: {
+    urls = "https://ftp.gnu.org/gnu/gettext/gettext-0.26.tar.xz"
+};
+
+$PKG.Checksums: {
+    md5:8e14e926f088e292f5f2bce95b81d10e gettext-0.26.tar.xz
+};
+
+$PKG.Build: {
+    cd gettext-0.26
+    ./configure --prefix=/usr \
+                --disable-static \
+                --docdir=/usr/share/doc/gettext-0.26
+    make -j${JOBS:-$(nproc)}
+};
+
+$PKG.Package: {
+    cd gettext-0.26
+    make DESTDIR="$PKGDIR" install
+    chmod -v 0755 "$PKGDIR/usr/lib/preloadable_libintl.so"
+};

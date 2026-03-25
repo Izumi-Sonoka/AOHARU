@@ -1,0 +1,39 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "1.6.3"
+    Description = "Framework for testing other programs"
+    Homepage = "https://www.gnu.org/software/dejagnu/"
+    Category = "dev-util"
+};
+
+$PKG.Depend.BDepends: {
+    make
+    expect
+    tcl
+};
+
+$PKG.Sources: {
+    urls = "https://ftp.gnu.org/gnu/dejagnu/dejagnu-1.6.3.tar.gz"
+};
+
+$PKG.Checksums: {
+    md5:68c5208c58236eba447d7d6d1326b821 dejagnu-1.6.3.tar.gz
+};
+
+$PKG.Build: {
+    cd dejagnu-1.6.3
+    mkdir -p build
+    cd build
+    ../configure --prefix=/usr
+    makeinfo --html --no-split -o doc/dejagnu.html ../doc/dejagnu.texi
+    makeinfo --plaintext -o doc/dejagnu.txt ../doc/dejagnu.texi
+    make -j${JOBS:-$(nproc)}
+};
+
+$PKG.Package: {
+    cd dejagnu-1.6.3/build
+    make DESTDIR="$PKGDIR" install
+    install -Dm644 doc/dejagnu.html "$PKGDIR/usr/share/doc/dejagnu-1.6.3/dejagnu.html"
+    install -Dm644 doc/dejagnu.txt  "$PKGDIR/usr/share/doc/dejagnu-1.6.3/dejagnu.txt"
+};

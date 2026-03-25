@@ -1,0 +1,29 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "6.15"
+    Description = "Linux man-pages"
+    Homepage = "https://www.kernel.org/doc/man-pages/"
+    Category = "sys-apps"
+};
+
+$PKG.Depend.BDepends: {
+    make
+};
+
+$PKG.Sources: {
+    urls = "https://www.kernel.org/pub/linux/docs/man-pages/man-pages-6.15.tar.xz"
+};
+
+$PKG.Checksums: {
+    md5:16f68d70139dd2bbcae4102be4705753 man-pages-6.15.tar.xz
+};
+
+$PKG.Build: {
+    cd man-pages-6.15
+};
+
+$PKG.Package: {
+    cd man-pages-6.15
+    make prefix=/usr DESTDIR="$PKGDIR" install
+};

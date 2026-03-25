@@ -1,0 +1,32 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "3.14"
+    Description = "System V init"
+    Homepage = "https://github.com/slicer69/sysvinit"
+    Category = "sys-apps"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/slicer69/sysvinit/releases/download/3.14/sysvinit-3.14.tar.xz"
+};
+
+$PKG.Checksums: {
+    md5:bc6890b975d19dc9db42d0c7364dd092 sysvinit-3.14.tar.xz
+};
+
+$PKG.Build: {
+    cd sysvinit-3.14
+    patch -Np1 -i ../sysvinit-3.14-consolidated-1.patch || true
+    make -j${JOBS:-$(nproc)}
+};
+
+$PKG.Package: {
+    cd sysvinit-3.14
+    make DESTDIR="$PKGDIR" install
+};

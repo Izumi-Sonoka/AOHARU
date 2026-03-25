@@ -1,0 +1,36 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "679"
+    Description = "Pager program similar to more"
+    Homepage = "https://www.greenwoodsoftware.com/less/"
+    Category = "sys-apps"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Depend.RDepends: {
+    ncurses
+};
+
+$PKG.Sources: {
+    urls = "https://www.greenwoodsoftware.com/less/less-679.tar.gz"
+};
+
+$PKG.Checksums: {
+    md5:0386dc14f6a081a94dfb4c2413864eed less-679.tar.gz
+};
+
+$PKG.Build: {
+    cd less-679
+    ./configure --prefix=/usr --sysconfdir=/etc
+    make -j${JOBS:-$(nproc)}
+};
+
+$PKG.Package: {
+    cd less-679
+    make DESTDIR="$PKGDIR" install
+};

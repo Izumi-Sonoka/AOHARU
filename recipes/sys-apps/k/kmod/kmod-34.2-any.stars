@@ -1,0 +1,49 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "34.2"
+    Description = "Linux kernel module handling"
+    Homepage = "https://github.com/kmod-project/kmod"
+    Category = "sys-apps"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Depend.RDepends: {
+    openssl
+    zlib
+    xz
+    zstd
+};
+
+$PKG.Sources: {
+    urls = "https://www.kernel.org/pub/linux/utils/kernel/kmod/kmod-34.2.tar.xz"
+};
+
+$PKG.Checksums: {
+    md5:36f2cc483745e81ede3406fa55e1065a kmod-34.2.tar.xz
+};
+
+$PKG.Build: {
+    cd kmod-34.2
+    ./configure --prefix=/usr \
+                --sysconfdir=/etc \
+                --with-openssl \
+                --with-xz \
+                --with-zstd \
+                --with-zlib \
+                --disable-manpages
+    make -j${JOBS:-$(nproc)}
+};
+
+$PKG.Package: {
+    cd kmod-34.2
+    make DESTDIR="$PKGDIR" install
+    for target in depmod insmod modinfo modprobe rmmod; do
+        ln -sfv ../bin/kmod "$PKGDIR/usr/sbin/$target"
+    done
+    ln -sfv kmod "$PKGDIR/usr/bin/lsmod"
+};

@@ -1,0 +1,38 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "3.1.6"
+    Description = "Fast and designer-friendly templating language"
+    Homepage = "https://jinja.palletsprojects.com/"
+    Category = "dev-python"
+};
+
+$PKG.Depend.BDepends: {
+    python3
+    setuptools
+};
+
+$PKG.Depend.RDepends: {
+    markupsafe
+};
+
+$PKG.Sources: {
+    urls = "https://pypi.org/packages/source/J/Jinja2/jinja2-3.1.6.tar.gz"
+};
+
+$PKG.Checksums: {
+    md5:66d4c25ff43d1deaf9637ccda523dec8 jinja2-3.1.6.tar.gz
+};
+
+$PKG.Build: {
+    cd jinja2-3.1.6
+};
+
+$PKG.Package: {
+    cd jinja2-3.1.6
+    pip3 install --no-build-isolation \
+                 --no-deps \
+                 --prefix=/usr \
+                 --root="$PKGDIR" \
+                 .
+};

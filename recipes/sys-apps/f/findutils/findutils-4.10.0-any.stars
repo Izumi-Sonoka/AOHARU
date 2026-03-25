@@ -1,0 +1,32 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "4.10.0"
+    Description = "GNU utilities for finding files"
+    Homepage = "https://www.gnu.org/software/findutils/"
+    Category = "sys-apps"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Sources: {
+    urls = "https://ftp.gnu.org/gnu/findutils/findutils-4.10.0.tar.xz"
+};
+
+$PKG.Checksums: {
+    md5:870cfd71c07d37ebe56f9f4aaf4ad872 findutils-4.10.0.tar.xz
+};
+
+$PKG.Build: {
+    cd findutils-4.10.0
+    ./configure --prefix=/usr --localstatedir=/var/lib/locate
+    make -j${JOBS:-$(nproc)}
+};
+
+$PKG.Package: {
+    cd findutils-4.10.0
+    make DESTDIR="$PKGDIR" install
+};

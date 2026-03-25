@@ -1,0 +1,32 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "7.0.3"
+    Description = "Arbitrary precision numeric processing language"
+    Homepage = "https://github.com/gavinhoward/bc"
+    Category = "sys-devel"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Sources: {
+    urls = "https://github.com/gavinhoward/bc/releases/download/7.0.3/bc-7.0.3.tar.xz"
+};
+
+$PKG.Checksums: {
+    md5:ad4db5a0eb4fdbb3f6813be4b6b3da74 bc-7.0.3.tar.xz
+};
+
+$PKG.Build: {
+    cd bc-7.0.3
+    CC=gcc ./configure.sh -G -O3 -lm
+    make -j${JOBS:-$(nproc)}
+};
+
+$PKG.Package: {
+    cd bc-7.0.3
+    make DESTDIR="$PKGDIR" install
+};

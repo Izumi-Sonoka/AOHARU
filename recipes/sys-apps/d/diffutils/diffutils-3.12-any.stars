@@ -1,0 +1,32 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "3.12"
+    Description = "GNU diff utilities"
+    Homepage = "https://www.gnu.org/software/diffutils/"
+    Category = "sys-apps"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Sources: {
+    urls = "https://ftp.gnu.org/gnu/diffutils/diffutils-3.12.tar.xz"
+};
+
+$PKG.Checksums: {
+    md5:d1b18b20868fb561f77861cd90b05de4 diffutils-3.12.tar.xz
+};
+
+$PKG.Build: {
+    cd diffutils-3.12
+    ./configure --prefix=/usr
+    make -j${JOBS:-$(nproc)}
+};
+
+$PKG.Package: {
+    cd diffutils-3.12
+    make DESTDIR="$PKGDIR" install
+};

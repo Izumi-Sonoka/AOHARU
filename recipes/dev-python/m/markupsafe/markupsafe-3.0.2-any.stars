@@ -1,0 +1,34 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "3.0.2"
+    Description = "Safely add untrusted strings to HTML/XML markup"
+    Homepage = "https://palletsprojects.com/p/markupsafe/"
+    Category = "dev-python"
+};
+
+$PKG.Depend.BDepends: {
+    python3
+    setuptools
+};
+
+$PKG.Sources: {
+    urls = "https://pypi.org/packages/source/M/MarkupSafe/markupsafe-3.0.2.tar.gz"
+};
+
+$PKG.Checksums: {
+    md5:cb0071711b573b155cc8f86e1de72167 markupsafe-3.0.2.tar.gz
+};
+
+$PKG.Build: {
+    cd markupsafe-3.0.2
+};
+
+$PKG.Package: {
+    cd markupsafe-3.0.2
+    pip3 install --no-build-isolation \
+                 --no-deps \
+                 --prefix=/usr \
+                 --root="$PKGDIR" \
+                 .
+};

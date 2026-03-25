@@ -1,0 +1,41 @@
+$PKG.Version = "3"
+
+$PKG.Metadata: {
+    Version = "4.0.5"
+    Description = "Utilities for monitoring your system and its processes"
+    Homepage = "https://sourceforge.net/projects/procps-ng/"
+    Category = "sys-apps"
+};
+
+$PKG.Depend.BDepends: {
+    gcc
+    make
+};
+
+$PKG.Depend.RDepends: {
+    ncurses
+    readline
+};
+
+$PKG.Sources: {
+    urls = "https://sourceforge.net/projects/procps-ng/files/Production/procps-ng-4.0.5.tar.xz"
+};
+
+$PKG.Checksums: {
+    md5:90803e64f51f192f3325d25c3335d057 procps-ng-4.0.5.tar.xz
+};
+
+$PKG.Build: {
+    cd procps-ng-4.0.5
+    ./configure --prefix=/usr \
+                --docdir=/usr/share/doc/procps-ng-4.0.5 \
+                --disable-static \
+                --disable-kill \
+                --with-readline
+    make -j${JOBS:-$(nproc)}
+};
+
+$PKG.Package: {
+    cd procps-ng-4.0.5
+    make DESTDIR="$PKGDIR" install
+};
